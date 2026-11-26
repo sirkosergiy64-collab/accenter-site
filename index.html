@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Accenter — меблі, що стають акцентом</title>
-<meta name="description" content="Accenter — авторські меблі з кращих фабрик Китаю з доставкою в Україну та Європу. Виготовлення під ваш запит. Партнерська програма для дизайнерів.">
+<meta name="description" content="Accenter — авторські меблі, дизайнерське світло, м'які меблі та меблі для терас з кращих фабрик Китаю з доставкою в Україну та Європу. Виготовлення під ваш запит. Партнерська програма для дизайнерів.">
 <meta property="og:title" content="Accenter — меблі, що стають акцентом">
 <meta property="og:description" content="Авторські меблі з кращих фабрик Китаю з доставкою в Україну та Європу. Виготовлення під ваш запит.">
 <meta property="og:image" content="https://accenter.agency/catalog/img/CT-01006.jpg">
@@ -54,6 +54,15 @@ h2{font:400 clamp(30px,3.6vw,42px)/1.1 Lora,serif;margin:0 0 12px;text-wrap:bala
 .card p{margin:0;color:#5d574e;font-size:15px}
 .ic{width:44px;height:44px;border-radius:50%;background:#f1e8d8;display:grid;place-items:center}
 .ic svg{width:22px;height:22px;stroke:#94723e;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.dirs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.dir{background:#fff;border:1px solid var(--line);border-radius:16px;padding:22px 22px 20px;text-decoration:none;display:flex;flex-direction:column;gap:6px;transition:border-color .2s}
+.dir:hover{border-color:var(--gold)}
+.dir h3{font:500 20px/1.25 Lora,serif;margin:8px 0 0}
+.dir p{margin:0;color:#5d574e;font-size:15px;flex:1}
+.tag{align-self:flex-start;margin-top:10px;font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;background:#f1e8d8;color:#7a5c2e}
+.tag.q{background:transparent;border:1px solid var(--line);color:#6f685e}
+@media(max-width:900px){.dirs{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.dirs{grid-template-columns:minmax(0,1fr);gap:10px}.dir{padding:18px}}
 .cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 @media(max-width:700px){.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat{aspect-ratio:1}.cat:last-child{grid-column:1/-1;aspect-ratio:2/1}}
 .cat{position:relative;display:block;border-radius:16px;overflow:hidden;text-decoration:none;background:#ddd;aspect-ratio:4/3}
@@ -104,7 +113,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
 <body>
 <nav><div class="wrap">
  <a class="brand" href="#top"><img src="/assets/logo.jpg" alt="">ACCENTER</a>
- <div class="menu"><a href="/catalog/">Каталог</a><a href="#how">Як ми працюємо</a><a href="#designers">Дизайнерам</a><a href="#contacts">Контакти</a></div>
+ <div class="menu"><a href="#directions">Напрямки</a><a href="/catalog/">Каталог</a><a href="#how">Як ми працюємо</a><a href="#designers">Дизайнерам</a><a href="#contacts">Контакти</a></div>
  <a class="btn g" href="/catalog/">Каталог</a>
 </div></nav>
 
@@ -134,8 +143,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
  </div>
 </div></section>
 
+<section id="directions" style="padding-top:0"><div class="wrap">
+ <h2>Напрямки</h2>
+ <p class="sub">Комплектуємо проєкт цілком — від корпусних меблів до світла й тераси. Каталог корпусних меблів уже онлайн, інші категорії підбираємо під ваш запит.</p>
+ <div class="dirs">
+  <a class="dir" href="/catalog/"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 8h18v10H3zM3 13h18M12 8v10M6 18v2M18 18v2"/></svg></div><h3>Корпусні меблі</h3><p>Буфети, комоди, консолі, ТВ-тумби, столи, туалетні столики, шафи й вітрини.</p><span class="tag">Каталог · 559 моделей</span></a>
+  <a class="dir" href="#contacts"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 3h6l3 7H6zM12 10v8M8 21h8"/></svg></div><h3>Дизайнерське світло</h3><p>Дизайнерські світильники для інтер'єру.</p><span class="tag q">Під запит</span></a>
+  <a class="dir" href="#contacts"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3M3 11h18v6H3zM5 17v2M19 17v2"/></svg></div><h3>М'які меблі</h3><p>Дивани, ліжка та інші м'які меблі.</p><span class="tag q">Під запит</span></a>
+  <a class="dir" href="#contacts"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20l2-9h12l2 9M6 11V6M18 11V6M3 6h18"/></svg></div><h3>Меблі для терас</h3><p>Меблі для тераси, саду й відкритих зон.</p><span class="tag q">Під запит</span></a>
+  <a class="dir" href="#contacts"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 10h16l-2 6H6zM8 16l-2 5M16 16l2 5M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/></svg></div><h3>Мангали та гриль</h3><p>Для тераси та зони барбекю.</p><span class="tag q">Під запит</span></a>
+  <a class="dir" href="#contacts"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><h3>І багато іншого</h3><p>Інші категорії — підберемо під ваш проєкт.</p><span class="tag q">Напишіть нам</span></a>
+ </div>
+</div></section>
+
 <section style="padding-top:0"><div class="wrap">
- <h2>Каталог</h2>
+ <h2>Каталог корпусних меблів</h2>
  <p class="sub">Ціни, розміри, варіанти кольорів і матеріали кожної моделі.</p>
  <div class="cats">
   <a class="cat" href="/catalog/#cat-0"><img loading="lazy" src="/catalog/img/SB-02004.jpg" alt=""><span>Буфети<small>67</small></span></a>
