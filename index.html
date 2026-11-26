@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Accenter — меблі, що стають акцентом</title>
+<meta name="description" content="Accenter — авторські меблі з кращих фабрик Китаю з доставкою в Україну та Європу. Виготовлення під ваш запит. Партнерська програма для дизайнерів.">
+<meta property="og:title" content="Accenter — меблі, що стають акцентом">
+<meta property="og:description" content="Авторські меблі з кращих фабрик Китаю з доставкою в Україну та Європу. Виготовлення під ваш запит.">
+<meta property="og:image" content="https://accenter.agency/catalog/img/CT-01006.jpg">
+<meta property="og:url" content="https://accenter.agency/">
+<link rel="icon" href="/assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: тихий преміальний шоурум — темне дерево, латунь, повітря
+IDEA: брошура меблевого ательє: обкладинка, розділи-категорії, умови співпраці
+PICTURE: мозаїка з чотирьох моделей у латунній рамці
+COLOUR and TYPE: #1d1a16 + латунь #C9A063 + кремовий; Lora (як логотип) + Inter
+LAYOUT: обкладинка → що ми робимо → категорії → як працюємо → дизайнерам → контакти
+*/
+:root{--band:#1d1a16;--band2:#25211c;--gold:#C9A063;--cream:#EEE8DC;--mute:#a69e92;--bg:#f7f5f1;--ink:#1b1a18;--line:#e8e2d8}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.wrap{max-width:1200px;margin:auto;padding:0 max(5vw,18px)}
+nav{position:sticky;top:0;z-index:5;background:rgba(29,26,22,.96);backdrop-filter:blur(6px);color:var(--cream)}
+nav .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:500 18px Lora,serif;letter-spacing:.12em}
+.brand img{width:36px;height:36px}
+.menu{display:flex;gap:22px;margin-left:auto;font-size:14px}
+.menu a{text-decoration:none;opacity:.85}.menu a:hover{opacity:1;color:var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:46px;padding:0 22px;border-radius:99px;font:600 15px Inter,sans-serif;text-decoration:none;border:1px solid var(--gold);transition:background .2s}
+.btn.g{background:var(--gold);color:#1d1a16}.btn.g:hover{background:#d8b27a}
+.btn.o{color:var(--cream)}.btn.o:hover{background:rgba(201,160,99,.12)}
+header.hero{background:var(--band);color:var(--cream)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:48px;align-items:center;padding-block:clamp(36px,6vw,84px)}
+.logo{width:120px;height:120px;display:block;margin-bottom:18px}
+h1{font:400 clamp(38px,5.4vw,64px)/1.05 Lora,serif;letter-spacing:.01em;margin:0 0 18px;text-wrap:balance}
+.lead{font-size:clamp(17px,1.6vw,19px);color:#d9cfbf;max-width:34em;margin:0 0 28px}
+.cta{display:flex;flex-wrap:wrap;gap:12px}
+.mosaic{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:10px;border:1px solid rgba(201,160,99,.45);border-radius:18px;background:var(--band2)}
+.mosaic img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:28px;color:var(--mute);font-size:14px}
+.facts b{display:block;color:var(--gold);font:500 26px Lora,serif}
+section{padding:clamp(48px,7vw,96px) 0}
+h2{font:400 clamp(30px,3.6vw,42px)/1.1 Lora,serif;margin:0 0 12px;text-wrap:balance}
+.sub{color:#6f685e;max-width:40em;margin:0 0 32px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px}
+.card h3{font:500 20px/1.25 Lora,serif;margin:12px 0 8px}
+.card p{margin:0;color:#5d574e;font-size:15px}
+.ic{width:44px;height:44px;border-radius:50%;background:#f1e8d8;display:grid;place-items:center}
+.ic svg{width:22px;height:22px;stroke:#94723e;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media(max-width:700px){.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat{aspect-ratio:1}.cat:last-child{grid-column:1/-1;aspect-ratio:2/1}}
+.cat{position:relative;display:block;border-radius:16px;overflow:hidden;text-decoration:none;background:#ddd;aspect-ratio:4/3}
+.cat img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.cat:hover img{transform:scale(1.04)}
+.cat span{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(20,18,15,.82));color:#fff;font:500 19px Lora,serif;display:flex;justify-content:space-between;align-items:baseline}
+.cat small{font:500 13px Inter,sans-serif;color:var(--gold)}
+.all{margin-top:24px}
+.dark{background:var(--band);color:var(--cream)}
+.dark .sub{color:var(--mute)}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:18px;counter-reset:s}
+.steps li{counter-increment:s;border-top:1px solid rgba(201,160,99,.5);padding-top:16px}
+.steps li::before{content:counter(s);font:400 34px Lora,serif;color:var(--gold);display:block;margin-bottom:6px}
+.steps b{display:block;font-weight:600;margin-bottom:4px}
+.steps span{color:var(--mute);font-size:14px}
+.partner{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:40px;align-items:center}
+.plist{margin:0 0 24px;padding:0;list-style:none}
+.plist li{padding:10px 0 10px 28px;border-bottom:1px solid var(--line);position:relative}
+.plist li::before{content:"";position:absolute;left:4px;top:19px;width:10px;height:10px;border-radius:50%;background:var(--gold)}
+.pbox{background:var(--band);color:var(--cream);border-radius:18px;padding:32px}
+.pbox p{color:#d9cfbf;margin:0 0 20px}
+.pbox h3{font:400 28px/1.15 Lora,serif;margin:0 0 12px}
+.ct{display:flex;flex-wrap:wrap;gap:10px}
+.ct a{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font-size:15px;padding:8px 18px 8px 8px;border:1px solid #3a352e;border-radius:99px;min-height:48px;color:var(--cream)}
+.ct a:hover{border-color:var(--gold)}
+.ct i{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;flex:none}
+.ct svg{width:16px;height:16px;fill:#fff}
+.contact{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:start}
+.contact p{color:var(--mute)}
+.phone{font:400 clamp(30px,4vw,44px) Lora,serif;color:var(--cream);text-decoration:none;display:block;margin:6px 0 20px}
+footer{background:#14120f;color:var(--mute);font-size:13px;padding:26px 0}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-between}
+@media(max-width:900px){
+ .hero .wrap,.partner,.contact{grid-template-columns:minmax(0,1fr)}
+ .three{grid-template-columns:minmax(0,1fr)}
+ .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .menu{display:none}
+ nav .btn{margin-left:auto;min-height:38px;padding:0 16px;font-size:14px}
+}
+@media(max-width:600px){
+ .logo{width:84px;height:84px}
+ .steps{grid-template-columns:minmax(0,1fr)}
+ .cat span{font-size:17px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+ <a class="brand" href="#top"><img src="/assets/logo.jpg" alt="">ACCENTER</a>
+ <div class="menu"><a href="/catalog/">Каталог</a><a href="#how">Як ми працюємо</a><a href="#designers">Дизайнерам</a><a href="#contacts">Контакти</a></div>
+ <a class="btn g" href="/catalog/">Каталог</a>
+</div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+ <div>
+  <img class="logo" src="/assets/logo.jpg" alt="Accenter — авторські меблі">
+  <h1>меблі, що стають акцентом</h1>
+  <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
+  <div class="cta"><a class="btn g" href="/catalog/">Відкрити каталог</a><a class="btn o" href="#contacts">Написати нам</a></div>
+  <div class="facts"><div><b>559</b>моделей у каталозі</div><div><b>15</b>категорій</div><div><b>UA · EU</b>доставка</div></div>
+ </div>
+ <div class="mosaic">
+  <img src="/catalog/img/CT-01006.jpg" alt="Журнальний стіл">
+  <img src="/catalog/img/DT-01007.jpg" alt="Обідній стіл">
+  <img src="/catalog/img/CN-02005.jpg" alt="Консоль">
+  <img src="/catalog/img/SB-02004.jpg" alt="Буфет">
+ </div>
+</div></header>
+
+<section><div class="wrap">
+ <h2>Що ми робимо</h2>
+ <p class="sub">Підбираємо меблі, які задають характер інтер'єру, і беремо на себе весь шлях від фабрики до вашого дому.</p>
+ <div class="three">
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.6"/><circle cx="17" cy="17.5" r="1.6"/></svg></div><h3>Доставка в Україну та Європу</h3><p>Організовуємо доставку з Китаю до вас: від фабрики до вашої адреси.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20h16M6 20V9l6-5 6 5v11M10 20v-6h4v6"/></svg></div><h3>Кращі фабрики Китаю</h3><p>Підбираємо авторські меблі у перевірених виробників: італійський мінімалізм, світла розкіш, вінтаж.</p></div>
+  <div class="card"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 20l4-1 11-11-3-3L5 16zM14 6l3 3"/></svg></div><h3>Виготовлення під запит</h3><p>Змінимо розмір, колір чи оздоблення моделі або підберемо фабрику під ваш ескіз.</p></div>
+ </div>
+</div></section>
+
+<section style="padding-top:0"><div class="wrap">
+ <h2>Каталог</h2>
+ <p class="sub">Ціни, розміри, варіанти кольорів і матеріали кожної моделі.</p>
+ <div class="cats">
+  <a class="cat" href="/catalog/#cat-0"><img loading="lazy" src="/catalog/img/SB-02004.jpg" alt=""><span>Буфети<small>67</small></span></a>
+  <a class="cat" href="/catalog/#cat-1"><img loading="lazy" src="/catalog/img/CH-01005.jpg" alt=""><span>Комоди<small>44</small></span></a>
+  <a class="cat" href="/catalog/#cat-2"><img loading="lazy" src="/catalog/img/CN-02005.jpg" alt=""><span>Консолі<small>131</small></span></a>
+  <a class="cat" href="/catalog/#cat-3"><img loading="lazy" src="/catalog/img/TV-02003.jpg" alt=""><span>ТВ-тумби<small>25</small></span></a>
+  <a class="cat" href="/catalog/#cat-4"><img loading="lazy" src="/catalog/img/CT-01006.jpg" alt=""><span>Журнальні столи<small>104</small></span></a>
+  <a class="cat" href="/catalog/#cat-5"><img loading="lazy" src="/catalog/img/ST-05002.jpg" alt=""><span>Приставні столики<small>47</small></span></a>
+  <a class="cat" href="/catalog/#cat-6"><img loading="lazy" src="/catalog/img/DT-01007.jpg" alt=""><span>Обідні столи<small>60</small></span></a>
+  <a class="cat" href="/catalog/#cat-9"><img loading="lazy" src="/catalog/img/VT-01004.jpg" alt=""><span>Туалетні столики<small>35</small></span></a>
+  <a class="cat" href="/catalog/#cat-11"><img loading="lazy" src="/catalog/img/CB-02001.jpg" alt=""><span>Шафи й вітрини<small>32</small></span></a>
+ </div>
+ <div class="all"><a class="btn g" href="/catalog/">Весь каталог — 559 моделей</a></div>
+</div></section>
+
+<section class="dark" id="how"><div class="wrap">
+ <h2>Як ми працюємо</h2>
+ <p class="sub">Ціни в каталозі в доларах США, без доставки. Оплата в доларах, гривнях або криптовалюті — курс фіксуємо перед оплатою.</p>
+ <ol class="steps">
+  <li><b>Вибір</b><span>Обираєте модель у каталозі або надсилаєте свій референс.</span></li>
+  <li><b>Розрахунок</b><span>Уточнюємо розмір, колір, матеріали й рахуємо вартість з доставкою.</span></li>
+  <li><b>Передоплата 50%</b><span>Фіксуємо курс і запускаємо замовлення.</span></li>
+  <li><b>Виготовлення</b><span>Фабрика виготовляє меблі під ваше замовлення.</span></li>
+  <li><b>Доставка</b><span>Доставляємо в Україну або Європу, ви доплачуєте решту.</span></li>
+ </ol>
+</div></section>
+
+<section id="designers"><div class="wrap partner">
+ <div>
+  <h2>Дизайнерам і архітекторам</h2>
+  <p class="sub">Працюємо з дизайнерами інтер'єру за партнерською програмою.</p>
+  <ul class="plist">
+   <li>Партнерські ціни на весь каталог</li>
+   <li>Підбір аналогів під ваш проєкт і специфікацію</li>
+   <li>Комерційна пропозиція з кількома варіантами стилю для клієнта</li>
+   <li>Виготовлення в ваших розмірах і кольорах</li>
+  </ul>
+ </div>
+ <div class="pbox">
+  <h3>Умови партнерської програми</h3>
+  <p>Напишіть нам в особисті повідомлення, і ми надішлемо умови та партнерський прайс.</p>
+  <div class="ct">
+   <a href="https://t.me/+380735058504"><i style="background:#2AABEE"><svg viewBox="0 0 24 24"><path d="M2.5 11.3 20.6 4.3c.8-.3 1.6.4 1.3 1.3l-3 14.2c-.2.9-1.2 1.3-2 .7l-4.6-3.4-2.3 2.2c-.3.3-.8.1-.8-.3l.2-3.6 8.2-7.4-10.1 6.3-4.3-1.4c-.9-.3-.9-1.5-.7-1.6z"/></svg></i>Telegram</a>
+   <a href="https://wa.me/380735058504"><i style="background:#2BB741"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>WhatsApp</a>
+  </div>
+ </div>
+</div></section>
+
+<section class="dark" id="contacts"><div class="wrap contact">
+ <div>
+  <h2>Контакти</h2>
+  <p>Питання по моделях, додаткові фото, розрахунок вартості — пишіть або телефонуйте.</p>
+  <a class="phone" href="tel:+380735058504">073 505 85 04</a>
+  <div class="ct">
+   <a href="tel:+380735058504"><i style="background:#C9A063"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></i>Подзвонити</a>
+   <a href="https://wa.me/380735058504"><i style="background:#2BB741"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>WhatsApp</a>
+   <a href="viber://chat?number=%2B380735058504"><i style="background:#7360F2"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>Viber</a>
+   <a href="https://t.me/+380735058504"><i style="background:#2AABEE"><svg viewBox="0 0 24 24"><path d="M2.5 11.3 20.6 4.3c.8-.3 1.6.4 1.3 1.3l-3 14.2c-.2.9-1.2 1.3-2 .7l-4.6-3.4-2.3 2.2c-.3.3-.8.1-.8-.3l.2-3.6 8.2-7.4-10.1 6.3-4.3-1.4c-.9-.3-.9-1.5-.7-1.6z"/></svg></i>Telegram</a>
+  </div>
+ </div>
+ <div>
+  <h2>Telegram-канал</h2>
+  <p>Нові моделі та добірки для інтер'єру.</p>
+  <a class="btn g" href="https://t.me/accentr_home">t.me/accentr_home</a>
+ </div>
+</div></section>
+
+<footer><div class="wrap"><span>© 2026 Accenter · авторські меблі</span><span>accenter.agency · 073 505 85 04</span></div></footer>
+</body>
+</html>

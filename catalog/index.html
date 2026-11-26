@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Каталог — Accenter</title>
+<meta name="description" content="Каталог Accenter: 559 моделей авторських меблів з цінами. Доставка в Україну та Європу з фабрик Китаю, виготовлення під запит.">
+<link rel="icon" href="/assets/logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*
+VOICE: тихий шоурум авторських меблів — темне дерево, латунь, багато повітря
+IDEA: друкований каталог фабрики-ательє: смуга з логотипом, вкладки категорій, картки з цінником
+PICTURE: самі меблі — велике фото кожної моделі
+COLOUR and TYPE: глибокий коричнево-чорний #1d1a16, латунь #C9A063, кремовий; Lora для назв, Inter для цифр
+LAYOUT: шапка-смуга з умовами й контактами, липкі вкладки категорій + пошук, сітка карток 1→2→3 колонки
+*/
+:root{color-scheme:light dark;--bg:light-dark(#f7f5f1,#14120f);--card:light-dark(#fff,#1f1c18);--ink:light-dark(#1b1a18,#efe9df);--mute:light-dark(#6f685e,#a69e92);--line:light-dark(#e8e2d8,#34302a);--band:#1d1a16;--gold:#C9A063;--gold2:light-dark(#94723e,#C9A063);--cream:#EEE8DC}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+html{scroll-padding-top:70px}
+@media(max-width:600px){html{scroll-padding-top:110px}h1.tag{font-size:27px}}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit}
+.top{background:var(--band);color:var(--cream)}
+.hero{max-width:1240px;margin:auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:28px;align-items:center;padding:24px max(4vw,16px)}
+.hero img{width:200px;height:200px;display:block}
+h1{font:500 clamp(26px,4vw,40px)/1.08 Lora,serif;margin:0 0 4px;text-wrap:balance}
+h1.tag{font:400 clamp(27px,4.6vw,48px)/1.12 Lora,serif;letter-spacing:.02em;color:#EEE8DC;margin:0 0 10px}
+.lead{font-size:16px;line-height:1.45;color:#d9cfbf;margin:0 0 10px;max-width:52ch}
+.sub{color:#a69e92;font-size:14px;margin:0 0 12px}
+.cond{font-size:14px;margin:0 0 8px;max-width:62ch}
+.ask{color:var(--gold);font-size:14px;margin:0 0 12px;max-width:62ch}
+.ct{display:flex;flex-wrap:wrap;gap:8px 10px}
+.ct a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-size:14px;padding:8px 14px 8px 8px;border:1px solid #3a352e;border-radius:99px;min-height:44px}
+.ct a:hover{border-color:var(--gold)}
+.ct i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none}
+.ct svg{width:15px;height:15px;fill:#fff}
+.chan{display:inline-block;margin-top:12px;color:var(--gold);font-size:14px}
+.bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--band) 96%,transparent);backdrop-filter:blur(6px);border-top:1px solid #2e2a24}
+.barin{max-width:1240px;margin:auto;padding:8px max(4vw,16px);display:flex;gap:10px;align-items:center}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:none;color:var(--cream);text-decoration:none;font-size:14px;padding:8px 12px;border-radius:99px;white-space:nowrap}
+.tabs a b{color:var(--gold);font-weight:500;margin-left:4px;font-size:12px}
+.tabs a.on{background:var(--gold);color:#1d1a16}.tabs a.on b{color:#1d1a16}
+.q{flex:none;width:min(220px,38vw);font:16px Inter,sans-serif;padding:8px 12px;border-radius:99px;border:1px solid #3a352e;background:#2a2621;color:var(--cream);min-height:40px}
+.q:focus{outline:2px solid var(--gold);outline-offset:1px}
+main{max-width:1240px;margin:auto;padding:8px max(4vw,16px) 80px}
+h2{font:500 clamp(24px,3vw,32px)/1.1 Lora,serif;margin:36px 0 14px;display:flex;align-items:baseline;gap:10px}
+h2 small{font:500 14px Inter,sans-serif;color:var(--mute)}
+.grid{display:grid;align-items:start;grid-template-columns:repeat(auto-fill,minmax(min(100%,360px),1fr));gap:16px}
+.c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 14px;display:flow-root}
+.c img{float:left;width:132px;height:132px;object-fit:cover;display:block;background:var(--line);cursor:zoom-in;border-radius:8px;margin:0 14px 8px 0}
+.art{font-size:13px;font-weight:600;color:var(--gold2);letter-spacing:.02em}
+.nm{font-weight:600;font-size:15px;line-height:1.3;margin:2px 0 8px}
+.pr{font-size:14px}
+.r{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid var(--line)}
+.r:last-child{border-bottom:0}
+.r b{white-space:nowrap;font-variant-numeric:tabular-nums}
+.lb{font-size:13px;font-weight:600;color:var(--gold2);margin:10px 0 2px}
+.op{margin:0;padding:0;list-style:none;font-size:13px;color:var(--mute)}
+.op li{padding-left:12px;position:relative;display:flow-root}
+.op li.one{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.op li::before{content:"•";position:absolute;left:0}
+.mt{font-size:13px;color:var(--mute);margin:0}
+.more{font-size:13px;color:var(--mute);background:none;border:0;padding:4px 0;cursor:pointer;text-decoration:underline;font-family:inherit}
+.empty{padding:40px 0;color:var(--mute)}
+.up{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:20px;width:48px;height:48px;border-radius:50%;border:0;background:var(--gold);color:#1d1a16;font-size:22px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
+.up.show{opacity:1;pointer-events:auto}
+.lbx{position:fixed;inset:0;background:rgba(10,9,8,.88);display:none;place-items:center;z-index:9;padding:20px}
+.lbx.show{display:grid}.lbx img{max-width:min(92vw,520px);width:100%;border-radius:10px}
+footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;padding:24px 16px}
+@media(max-width:600px){
+ .hero{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:16px}
+ .hero img{width:96px;height:96px}
+ .hero .txt{display:contents}
+ .hero h1{grid-column:2;align-self:center}.hero .sub{grid-column:1/-1}.hero .lead{grid-column:1/-1;margin-top:4px}
+ .cond,.ask,.ct,.chan{grid-column:1/-1}
+ .c img{width:112px;height:112px}
+ .barin{flex-wrap:wrap;padding:6px 12px}.tabs{flex-basis:100%}.q{width:100%;min-height:38px}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<header class="top" id="top">
+ <div class="hero">
+  <a href="/" aria-label="На головну"><img src="/assets/logo.jpg" alt="Accenter — авторські меблі"></a>
+  <div class="txt">
+   <h1 class="tag">меблі, що стають акцентом</h1>
+   <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
+   <p class="sub" id="cnt">Авторські меблі під замовлення</p>
+   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни без доставки в Україну. Ціни в доларах США. Оплата приймається в доларах, гривнях або криптовалюті — курс фіксуємо перед оплатою.</p>
+   <p class="ask">За додатковими питаннями по моделях або за додатковими фото пишіть в особисті повідомлення.</p>
+   <div class="ct">
+    <a href="tel:+380735058504"><i style="background:#C9A063"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></i><b>073 505 85 04</b></a>
+    <a href="https://wa.me/380735058504"><i style="background:#2BB741"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>WhatsApp</a>
+    <a href="viber://chat?number=%2B380735058504"><i style="background:#7360F2"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>Viber</a>
+    <a href="https://t.me/+380735058504"><i style="background:#2AABEE"><svg viewBox="0 0 24 24"><path d="M2.5 11.3 20.6 4.3c.8-.3 1.6.4 1.3 1.3l-3 14.2c-.2.9-1.2 1.3-2 .7l-4.6-3.4-2.3 2.2c-.3.3-.8.1-.8-.3l.2-3.6 8.2-7.4-10.1 6.3-4.3-1.4c-.9-.3-.9-1.5-.7-1.6z"/></svg></i>Telegram</a>
+   </div>
+   <a class="chan" href="/">← На головну</a> · <a class="chan" href="https://t.me/accentr_home">Наш канал: t.me/accentr_home</a>
+  </div>
+ </div>
+</header>
+ <div class="bar"><div class="barin">
+  <nav class="tabs" id="tabs" aria-label="Категорії"></nav>
+  <input class="q" id="q" type="search" placeholder="Пошук: артикул, назва" aria-label="Пошук">
+ </div></div>
+<main id="main"><p class="empty">Завантаження каталогу…</p></main>
+<footer>Accenter · авторські меблі · 073 505 85 04 · t.me/accentr_home</footer>
+<button class="up" id="up" aria-label="Нагору">↑</button>
+<div class="lbx" id="lbx"><img alt=""></div>
+<script>
+{
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>n.toLocaleString('uk-UA').replace(/ /g,' ');
+const pl=(n,a,b,c)=>{const m=n%10,h=n%100;return n+' '+(m===1&&h!==11?a:m>=2&&m<=4&&(h<12||h>14)?b:c)};
+const price=(a,b)=>a===b?'$'+fmt(a):'$'+fmt(a)+'–'+fmt(b);
+const main=document.getElementById('main'),tabs=document.getElementById('tabs'),q=document.getElementById('q');
+let DATA=[],CATS=[];
+function card(d){
+  const row=r=>`<div class="r"><span>${esc(r[0])}</span><b>${price(r[1],r[2])}</b></div>`;const rows=d.p.slice(0,6).map(row).join('');
+  const moreP=d.p.length>6?`<button class="more" data-k="p">ще ${pl(d.p.length-6,'розмір','розміри','розмірів')}</button>`:'';
+  const ops=d.o.slice(0,2).map(o=>`<li class="one">${esc(o)}</li>`).join('');
+  const moreO=(d.o.length>2||d.o.some(o=>o.length>34))?`<button class="more" data-k="o">Більше варіантів${d.o.length>2?' ('+d.o.length+')':''}</button>`:'';
+  const det=(d.o.length?`<div class="lb">Варіанти</div><ul class="op">${ops}</ul>${moreO}`:'')+(d.m.length?`<div class="lb">Матеріали</div><p class="mt">${esc(d.m.join(', '))}</p>`:'');
+  return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
+  <div class="art">${esc(d.a)}</div><div class="nm">${esc(d.n)}</div>
+  <div class="pr">${rows}</div>${moreP}
+  ${det}</article>`;
+}
+function render(filter){
+  const f=(filter||'').trim().toLowerCase();
+  const list=f?DATA.filter(d=>(d.a+' '+d.n+' '+d.c+' '+d.m.join(' ')).toLowerCase().includes(f)):DATA;
+  if(!list.length){main.innerHTML='<p class="empty">Нічого не знайдено. Спробуйте артикул або іншу назву.</p>';return}
+  main.innerHTML=CATS.map((c,i)=>{
+    const items=list.filter(d=>d.c===c); if(!items.length)return '';
+    return `<section id="cat-${i}"><h2>${esc(c)} <small>${items.length}</small></h2><div class="grid">${items.map(card).join('')}</div></section>`;
+  }).join('');
+  observe();
+}
+main.addEventListener('click',e=>{
+  const b=e.target.closest('.more');
+  if(b){const a=b.closest('.c').dataset.a,d=DATA.find(x=>x.a===a);
+    if(b.dataset.k==='p'){b.previousElementSibling.innerHTML=d.p.map(r=>`<div class="r"><span>${esc(r[0])}</span><b>${price(r[1],r[2])}</b></div>`).join('')}
+    else{const ul=b.previousElementSibling,open=b.dataset.open==='1';ul.innerHTML=(open?d.o.slice(0,2).map(o=>`<li class="one">${esc(o)}</li>`):d.o.map(o=>`<li>${esc(o)}</li>`)).join('');b.dataset.open=open?'0':'1';b.textContent=open?'Більше варіантів'+(d.o.length>2?' ('+d.o.length+')':''):'Згорнути';return}
+    b.remove();return}
+  const im=e.target.closest('.c img');
+  if(im){const l=document.getElementById('lbx');l.querySelector('img').src=im.src;l.classList.add('show')}
+});
+document.getElementById('lbx').addEventListener('click',e=>e.currentTarget.classList.remove('show'));
+let io=null;
+function observe(){
+  if(io)io.disconnect();
+  io=new IntersectionObserver(es=>{for(const en of es)if(en.isIntersecting){const id=en.target.id;for(const a of tabs.children){const on=a.getAttribute('href')==='#'+id;a.classList.toggle('on',on);if(on)tabs.scrollTo({left:a.offsetLeft-tabs.clientWidth/2+a.offsetWidth/2})}}},{rootMargin:'-130px 0px -70% 0px'});
+  document.querySelectorAll('main section').forEach(s=>io.observe(s));
+}
+tabs.addEventListener('click',e=>{const a=e.target.closest('a');if(!a)return;e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t){go(t);try{history.replaceState(null,'',a.getAttribute('href'))}catch(_){}}});
+function go(t){const bh=document.querySelector('.bar').offsetHeight+8;const f=()=>scrollTo({top:t.getBoundingClientRect().top+scrollY-bh,behavior:'instant'});f();setTimeout(f,250)}
+let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(()=>render(q.value),200)});
+const up=document.getElementById('up');
+addEventListener('scroll',()=>up.classList.toggle('show',scrollY>600),{passive:true});
+up.addEventListener('click',()=>scrollTo({top:0}));
+fetch('data.json').then(r=>r.json()).then(d=>{
+  DATA=d;CATS=[...new Set(d.map(x=>x.c))];
+  document.getElementById('cnt').textContent=`${d.length} моделей · оновлено ${'26.11.2026'}`;
+  tabs.innerHTML=CATS.map((c,i)=>`<a href="#cat-${i}">${esc(c)}<b>${d.filter(x=>x.c===c).length}</b></a>`).join('');
+  render('');
+  if(/^#cat-\d+$/.test(location.hash)){const t=document.querySelector(location.hash);if(t)go(t)}
+}).catch(()=>{main.innerHTML='<p class="empty">Не вдалося завантажити каталог. Оновіть сторінку.</p>'});
+}
+</script>
+</body>
+</html>
