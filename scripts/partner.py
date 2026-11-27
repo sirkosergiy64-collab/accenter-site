@@ -8,6 +8,10 @@ ORDER = ['Консолі', 'Журнальні столи', 'Буфети', 'О�
          'Туалетні столики', 'Шафи й вітрини', 'ТВ-тумби', 'Інше']
 
 data = json.load(open('catalog/data.json'))
+# моделі без цін (нові постачальники) — тільки в партнерському каталозі
+import glob
+for f in sorted(glob.glob('catalog/pending*.json')):
+    data += json.load(open(f))
 items = [{'a': d['a'], 'n': d['n'], 'd': d.get('d', ''), 'c': d['c'],
           'z': [r[0] for r in d['p'] if any(ch.isdigit() for ch in r[0])], 'v': [r[0] for r in d['p'] if not any(ch.isdigit() for ch in r[0]) and r[0] not in ('Ціна','')], 'o': d.get('o', [])[:8], 'm': d.get('m', []), 's': d.get('s', [])}
          for d in data]
