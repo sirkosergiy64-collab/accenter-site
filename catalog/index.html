@@ -279,7 +279,7 @@ $('fp').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)ret
   if(g==='pr'){F.pr=F.pr===Number(v)?null:Number(v)}else{F[g].has(v)?F[g].delete(v):F[g].add(v)}chips();render()});
 document.querySelector('.cur').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;CUR=b.dataset.c;ls.set('accCur',CUR);curUI();render()});
 function curUI(){for(const b of document.querySelectorAll('.cur button')){const on=b.dataset.c===CUR;b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)}
-  const n=$('curnote');n.hidden=CUR==='USD';n.textContent=CUR==='USD'?'':`Ціни в ${CUR==='UAH'?'гривнях':'євро'} орієнтовні — за курсом НБУ на ${R.date}. Курс фіксуємо перед оплатою.`}
+  const n=$('curnote');n.hidden=CUR==='USD';n.textContent=CUR==='USD'?'':`Ціни в ${CUR==='UAH'?'гривнях':'євро'} орієнтовні — за ринковим курсом на ${R.date}: $1 = ${String(R.USD).replace('.',',')} ₴, €1 = ${String(R.EUR.toFixed(2)).replace('.',',')} ₴. Курс фіксуємо перед оплатою.`}
 let io=null;
 function observe(){
   if(io)io.disconnect();
