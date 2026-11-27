@@ -48,16 +48,16 @@ def page(cat, slug, h1, kw, where):
         rows = ''.join(f'<li><span>{esc(r[0])}</span><b>{price(r[1], r[2])}</b></li>' for r in d['p'][:4])
         cards.append(
             f'<article class="c"><img src="/catalog/img/{esc(d["a"])}.jpg" alt="{esc(d["n"])}" loading="lazy" width="400" height="400">'
-            f'<div><span class="art">{esc(d["a"])}</span><h2>{esc(d["n"])}</h2>{"<p class=ds>"+esc(d.get("d",""))+"</p>" if d.get("d") else ""}<ul>{rows}</ul>'
+            f'<div><span class="art">{esc(d["a"])}</span><h2><a href="/catalog/m/{esc(d["a"])}/" style="text-decoration:none">{esc(d["n"])}</a></h2>{"<p class=ds>"+esc(d.get("d",""))+"</p>" if d.get("d") else ""}<ul>{rows}</ul>'
             f'{"<p>Матеріали: " + esc(", ".join(d["m"])) + "</p>" if d["m"] else ""}'
-            f'<a class="q" href="/catalog/?m={esc(d["a"])}">Деталі та запит</a></div></article>')
+            f'<a class="q" href="/catalog/m/{esc(d["a"])}/">Деталі, ціна з доставкою</a></div></article>')
     ld = {
         '@context': 'https://schema.org', '@type': 'ItemList', 'name': h1,
         'itemListElement': [{'@type': 'ListItem', 'position': n + 1, 'item': {
             '@type': 'Product', 'name': d['n'], 'description': d.get('d', ''), 'sku': d['a'], 'image': f'{SITE}/catalog/img/{d["a"]}.jpg',
             'brand': {'@type': 'Brand', 'name': 'Accenter'},
             'offers': {'@type': 'Offer', 'priceCurrency': 'USD', 'price': min(r[1] for r in d['p']),
-                       'availability': 'https://schema.org/PreOrder', 'url': f'{SITE}/catalog/?m={d["a"]}'}}}
+                       'availability': 'https://schema.org/PreOrder', 'url': f'{SITE}/catalog/m/{d["a"]}/'}}}
             for n, d in enumerate(items)]}
     crumbs = {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': [
         {'@type': 'ListItem', 'position': 1, 'name': 'Accenter', 'item': SITE + '/'},
@@ -106,7 +106,7 @@ def page(cat, slug, h1, kw, where):
     return slug
 
 slugs = [page(*p) for p in PAGES]
-urls = [('/', '1.0'), ('/catalog/', '0.9')] + [(f'/catalog/{s}/', '0.8') for s in slugs]
+urls = [('/', '1.0'), ('/catalog/', '0.9'), ('/designers/', '0.8')] + [(f'/catalog/{s}/', '0.8') for s in slugs]
 open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority></url>\n' for u, p in urls) + '</urlset>\n')
 open('robots.txt', 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
