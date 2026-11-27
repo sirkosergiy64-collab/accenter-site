@@ -1,0 +1,29 @@
+name: Курс валют
+on:
+  schedule:
+    - cron: '7 * * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/rates.py
+      - .github/workflows/rates.yml
+permissions:
+  contents: write
+concurrency: rates
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/rates.py
+      - name: Commit
+        run: |
+          if git diff --quiet; then echo "no changes"; exit 0; fi
+          git config user.name "accenter-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add catalog/rates.json
+          git commit -m "Курс валют: $(date -u +%Y-%m-%dT%H:%MZ)"
+          git push
