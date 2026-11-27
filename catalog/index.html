@@ -117,8 +117,8 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .sh .ct{display:grid;gap:8px}.sh .ct a{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border:1px solid #3a352e;border-radius:12px;text-decoration:none;font-weight:600}
 .sh .ct i{width:12px;height:12px;border-radius:50%}
 .x{position:absolute;right:10px;top:8px;width:40px;height:40px;border:0;background:none;color:var(--cream);font-size:26px;cursor:pointer}
-.dl{display:block;background:none;border:0;padding:6px 0 0;color:var(--gold2);font:600 13px Inter,sans-serif;cursor:pointer;text-align:left}
-.dl:hover{text-decoration:underline}
+.dl{clear:both;display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:46px;margin:14px 0 0;border:0;border-radius:99px;background:var(--gold);color:#1d1a16;font:600 15px Inter,sans-serif;cursor:pointer}
+.dl:hover{filter:brightness(1.07)}.dl svg{flex:none}
 .shp{width:100%;border-collapse:collapse;font-size:14px}.shp th{text-align:left;font-size:12px;color:#a69e92;font-weight:600;padding:0 0 6px}
 .shp td{padding:8px 0;border-top:1px solid #3a352e;vertical-align:top}.shp td+td,.shp th+th{text-align:right;white-space:nowrap;padding-left:10px}
 .shp small{display:block;color:#a69e92;font-size:12px}
@@ -134,7 +134,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
    <h1 class="tag">меблі, що стають акцентом</h1>
    <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
    <p class="sub" id="cnt">Авторські меблі під замовлення</p>
-   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни без доставки в Україну. Ціни в доларах США. Оплата в доларах, гривнях або криптовалюті, безготівково — на рахунок ФОП або ТОВ. Курс фіксуємо перед оплатою.</p>
+   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни без доставки в Україну — орієнтовну доставку до Львова розрахуєте кнопкою в картці моделі. Ціни в доларах США. Оплата в доларах, гривнях або криптовалюті, безготівково — на рахунок ФОП або ТОВ. Курс фіксуємо перед оплатою.</p>
    <p class="ask">За додатковими питаннями по моделях або за додатковими фото пишіть в особисті повідомлення.</p>
    <div class="ct">
     <a href="tel:+380735058504"><i style="background:#C9A063"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></i><b>073 505 85 04</b></a>
@@ -201,8 +201,7 @@ function card(d){
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
   <div class="art">${esc(d.a)}</div><div class="nm">${esc(d.n)}</div>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}
   <div class="pr">${rows}</div>${moreP}${d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
-  <button class="dl">Ціна з доставкою до Львова →</button>
-  ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
+  ${det}<button class="dl"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>Розрахувати доставку до Львова</span></button><div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
 const minp=d=>Math.min(...d.p.map(r=>r[1]));
 function filtered(){
