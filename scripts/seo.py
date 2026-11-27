@@ -110,7 +110,7 @@ def page(cat, slug, h1, kw, where):
     return slug
 
 slugs = [page(*p) for p in PAGES]
-urls = [('/', '1.0'), ('/catalog/', '0.9'), ('/designers/', '0.8')] + [(f'/catalog/{s}/', '0.8') for s in slugs]
+urls = [('/', '1.0'), ('/catalog/', '0.9'), ('/designers/', '0.8'), ('/dostavka/', '0.8')] + [(f'/catalog/{s}/', '0.8') for s in slugs]
 open('sitemap.xml', 'w').write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
     ''.join(f'  <url><loc>{SITE}{u}</loc><lastmod>{TODAY}</lastmod><priority>{p}</priority></url>\n' for u, p in urls) + '</urlset>\n')
 open('robots.txt', 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n')
