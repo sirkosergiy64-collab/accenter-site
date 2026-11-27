@@ -29,6 +29,7 @@ def top(items, key, n):
     return [k for k, _ in collections.Counter(x for d in items for x in d[key]).most_common(n)]
 
 STYLE = open('scripts/seo_style.css', encoding='utf-8').read()
+GTAG = open('scripts/gtag.html', encoding='utf-8').read()
 
 def page(cat, slug, h1, kw, where):
     items = [d for d in D if d['c'] == cat]
@@ -66,7 +67,7 @@ def page(cat, slug, h1, kw, where):
     out = f'''<!DOCTYPE html>
 <html lang="uk">
 <head>
-<meta charset="utf-8">
+{GTAG}<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">

@@ -1,6 +1,7 @@
 """Партнерський каталог для дизайн-агенцій: без цін, контактів і логотипа.
 Неіндексована сторінка за прихованою адресою. Запуск: python3 scripts/partner.py"""
 import json, os, html
+GTAG = open('scripts/gtag.html', encoding='utf-8').read()
 
 SLUG = 'p/6b6aaeb3'
 ORDER = ['Консолі', 'Журнальні столи', 'Буфети', 'Обідні столи', 'Приставні столики', 'Комоди',
@@ -16,7 +17,7 @@ styles = sorted({s for i in items for s in i['s']})
 
 page = r'''<!doctype html>
 <html lang="uk"><head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+__GTAG__<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive">
 <title>Колекція меблів — каталог для дизайнерів</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -101,7 +102,7 @@ function toast(t){const d=document.createElement('div');d.className='toast';d.te
 tabs();draw();
 </script></body></html>
 '''
-page = (page.replace('__DATA__', json.dumps(items, ensure_ascii=False, separators=(',', ':')))
+page = (page.replace('__GTAG__', GTAG).replace('__DATA__', json.dumps(items, ensure_ascii=False, separators=(',', ':')))
             .replace('__CATS__', json.dumps(cats, ensure_ascii=False))
             .replace('__STY__', json.dumps(styles, ensure_ascii=False))
             .replace('__N__', str(len(items))))
