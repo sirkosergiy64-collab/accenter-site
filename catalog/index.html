@@ -155,7 +155,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
    <h1 class="tag">меблі, що стають акцентом</h1>
    <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
    <p class="sub" id="cnt">Авторські меблі під замовлення</p>
-   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни без доставки в Україну — орієнтовну доставку до Львова розрахуєте кнопкою в картці моделі. Ціни в доларах США. Оплата в доларах, гривнях або криптовалюті, безготівково — на рахунок ФОП або ТОВ. Курс фіксуємо перед оплатою.</p>
+   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни під ключ — з доставкою до Львова; доставку по Україні Новою поштою сплачуєте за тарифом перевізника. Ціни в доларах США. Оплата в доларах, гривнях або криптовалюті, безготівково — на рахунок ФОП або ТОВ. Курс фіксуємо перед оплатою.</p>
    <p class="ask">За додатковими питаннями по моделях або за додатковими фото пишіть в особисті повідомлення.</p>
    <div class="ct">
     <a href="tel:+380735058504"><i style="background:#C9A063"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></i><b>073 505 85 04</b></a>
@@ -228,8 +228,8 @@ function card(d){
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
   <div class="art">${esc(d.a)}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
-  <div class="pr">${rows}</div>${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}${noP(d)?'':(()=>{const s=ship(d).reduce((x,y)=>x.a+x.m<=y.a+y.m?x:y);return `<div class="lv">Орієнтовно у Львові з доставкою: <b>від ${one(Math.round(s.a+s.m))}</b></div>`})()}
-  ${det}${noP(d)?'':DLB}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
+  <div class="pr">${rows}</div>${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
+  ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
 const minp=d=>noP(d)?Infinity:Math.min(...d.p.filter(r=>r[1]!=null).map(r=>r[1]));
 function filtered(){
@@ -286,7 +286,6 @@ main.addEventListener('click',e=>{
     return}
   const fv=e.target.closest('.fav');
   if(fv){FAV.has(d.a)?FAV.delete(d.a):FAV.add(d.a);const on=FAV.has(d.a);fv.classList.toggle('on',on);fv.setAttribute('aria-pressed',on);fv.setAttribute('aria-label',on?'Прибрати з обраного':'Додати в обране');saveFav();if(VIEW&&VIEW.kind==='fav'&&!on){VIEW.set=new Set(FAV);render()}return}
-  if(e.target.closest('.dl')){shipSheet(d);return}
   if(e.target.closest('.askb')){const link=SITE+'?m='+encodeURIComponent(d.a);const txt=`Добрий день! Цікавить модель ${d.a} — ${d.n}. ${link}`;
     openSheet('Запитати про модель',`${d.a} · ${d.n}`,[['WhatsApp','#2BB741','https://wa.me/'+PHONE+'?text='+encodeURIComponent(txt)],['Telegram','#2AABEE','https://t.me/+'+PHONE],['Viber','#7360F2','viber://chat?number=%2B'+PHONE]],txt,'Текст запиту скопійовано — вставте його в чат. Телефон: 073 505 85 04');return}
   const im=e.target.closest('.c img');

@@ -53,7 +53,7 @@ def page(cat, slug, h1, kw, where):
             f'<article class="c"><img src="/catalog/img/{esc(d["a"])}.jpg" alt="{esc(d["n"])}" loading="lazy" width="400" height="400">'
             f'<div><span class="art">{esc(d["a"])}</span><h2><a href="/catalog/m/{esc(d["a"])}/" style="text-decoration:none">{esc(d["n"])}</a></h2>{"<p class=ds>"+esc(d.get("d",""))+"</p>" if d.get("d") else ""}<ul>{rows}</ul>'
             f'{"<p>Матеріали: " + esc(", ".join(d["m"])) + "</p>" if d["m"] else ""}'
-            f'<a class="q" href="/catalog/m/{esc(d["a"])}/">Деталі, ціна з доставкою</a></div></article>')
+            f'<a class="q" href="/catalog/m/{esc(d["a"])}/">Деталі та запит</a></div></article>')
     ld = {
         '@context': 'https://schema.org', '@type': 'ItemList', 'name': h1,
         'itemListElement': [{'@type': 'ListItem', 'position': n + 1, 'item': {
@@ -93,7 +93,7 @@ def page(cat, slug, h1, kw, where):
  <p class="crumbs"><a href="/">Головна</a> / <a href="/catalog/">Каталог</a> / {esc(h1)}</p>
  <h1>{esc(h1)}</h1>
  <p class="lead">{esc(lead)}</p>
- <p class="note">Ціни в доларах США, без доставки. Оплата в доларах, гривнях, криптовалюті або на рахунок ФОП чи ТОВ — курс фіксуємо перед оплатою.</p>
+ <p class="note">Ціни в доларах США під ключ — з доставкою до Львова. Оплата в доларах, гривнях, криптовалюті або на рахунок ФОП чи ТОВ — курс фіксуємо перед оплатою.</p>
 </div></header>
 <main class="wrap"><div class="grid">
 {chr(10).join(cards)}
