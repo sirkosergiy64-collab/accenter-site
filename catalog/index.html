@@ -299,6 +299,7 @@ Promise.all([fetch('data.json').then(r=>r.json()),fetch('rates.json').then(r=>r.
   tabs.innerHTML=CATS.map((c,i)=>`<a href="#cat-${i}">${esc(c)}<b>${d.filter(x=>x.c===c).length}</b></a>`).join('');
   saveFav();chips();curUI();
   const sp=new URLSearchParams(location.search);
+  for(const v of sp.getAll('s'))F.s.add(v);for(const v of sp.getAll('mt'))F.mt.add(v);if(F.s.size||F.mt.size)chips();
   if(sp.get('sel'))VIEW={kind:'sel',set:new Set(sp.get('sel').split(',').filter(Boolean))};
   else if(sp.get('m'))VIEW={kind:'one',set:new Set([sp.get('m')])};
   render();
