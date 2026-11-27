@@ -84,7 +84,7 @@ def page(d, rel):
     relh = ''.join(f'<article class="c"><a href="/catalog/m/{esc(r["a"])}/"><img src="/catalog/img/{esc(r["a"])}.jpg" alt="{esc(r["n"])}" loading="lazy" width="400" height="400"></a>'
                    f'<div><span class="art">{esc(r["a"])}</span><h2><a href="/catalog/m/{esc(r["a"])}/" style="text-decoration:none">{esc(r["n"])}</a></h2>'
                    f'<p class="ds">{esc(r.get("d", ""))}</p><p><b>{price(None if NOP(r) else MINP(r), None if NOP(r) else MINP(r))}</b></p></div></article>' for r in rel)
-    desc = f'{n} ({a}) — {d.get("d", "")}. {'Ціна за запитом.' if nop else f'Ціна від ${fmt(lo)} без доставки.'} Виготовлення під замовлення, доставка в Україну та Європу.'
+    desc = f'{n} ({a}) — {d.get("x") or d.get("d", "")}'[:240].rstrip('.') + f'. {'Ціна за запитом.' if nop else f'Ціна від ${fmt(lo)} без доставки.'} Виготовлення під замовлення, доставка в Україну та Європу.'
     ld = {'@context': 'https://schema.org', '@type': 'Product', 'name': n, 'sku': a, 'description': desc,
           'image': f'{SITE}/catalog/img/{a}.jpg', 'brand': {'@type': 'Brand', 'name': 'Accenter'}, 'category': cat,
           **({} if nop else {'offers': {'@type': 'AggregateOffer', 'priceCurrency': 'USD', 'lowPrice': lo, 'highPrice': max(r[2] for r in d['p']),
@@ -113,6 +113,7 @@ def page(d, rel):
    <span class="art">{esc(a)}</span>
    <h1>{esc(n)}</h1>
    {f'<p class="ds">{esc(d["d"])}</p>' if d.get('d') else ''}
+   {f'<p style="margin:0 0 16px;line-height:1.6;color:#4a453e">{esc(d["x"])}</p>' if d.get('x') else ''}
    <table class="t"><thead><tr><th>Розмір</th>{'<th colspan="3" style="text-align:right">Ціна</th>' if nop else '<th>Ціна</th><th>Доставка</th><th>У Львові</th>'}</tr></thead><tbody>{rows}</tbody></table>
    {'<p class="sn">Вартість і термін виготовлення назве менеджер — напишіть нам, розрахуємо з доставкою.</p>' if nop else f'''<p class="sn">Ціна без доставки. Доставка морем «під ключ» до Львова — орієнтовно, за середньою ставкою ${(SHIP_LO + SHIP_HI) // 2} за м³ (у перевізників ${SHIP_LO}–{SHIP_HI}), з упаковкою й дерев'яною обрешіткою. Точну суму назве менеджер. Курс фіксуємо перед оплатою.</p>'''}
    {kv}

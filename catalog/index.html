@@ -143,6 +143,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .hlpm b{color:#EEE8DC;font:500 18px Lora,serif}.hlpm span{color:#a69e92;font-size:12px;margin-bottom:4px}
 .hlpm a{color:#EEE8DC;text-decoration:none;font-size:14px;padding:10px 12px;border-radius:10px;background:#2a2621}.hlpm a:hover{background:#3a352e}
 @media(max-width:480px){.hlpb span{display:none}.hlpb{width:48px;padding:0;justify-content:center}}
+.tx{clear:both;margin:10px 0 4px;font-size:13.5px;line-height:1.5;color:#5c564d}
 .rq{margin-top:6px;font:600 15px Inter,sans-serif;color:var(--gold2)}
 </style>
 </head>
@@ -226,7 +227,7 @@ function card(d){
   const det=(d.o.length?`<div class="lb">Варіанти</div><ul class="op">${ops}</ul>${moreO}`:'')+(d.m.length?`<div class="lb">Матеріали</div><p class="mt">${esc(d.m.join(', '))}</p>`:'');
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
-  <div class="art">${esc(d.a)}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}
+  <div class="art">${esc(d.a)}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
   <div class="pr">${rows}</div>${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}${noP(d)?'':(()=>{const s=ship(d).reduce((x,y)=>x.a+x.m<=y.a+y.m?x:y);return `<div class="lv">Орієнтовно у Львові з доставкою: <b>від ${one(Math.round(s.a+s.m))}</b></div>`})()}
   ${det}${noP(d)?'':DLB}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }

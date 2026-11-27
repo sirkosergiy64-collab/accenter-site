@@ -13,7 +13,7 @@ import glob
 for f in sorted(glob.glob('catalog/pending*.json')):
     data += json.load(open(f))
 items = [{'a': d['a'], 'n': d['n'], 'd': d.get('d', ''), 'c': d['c'],
-          'z': [r[0] for r in d['p'] if any(ch.isdigit() for ch in r[0])], 'v': [r[0] for r in d['p'] if not any(ch.isdigit() for ch in r[0]) and r[0] not in ('Ціна','')], 'o': d.get('o', [])[:8], 'm': d.get('m', []), 's': d.get('s', [])}
+          'z': [r[0] for r in d['p'] if any(ch.isdigit() for ch in r[0])], 'v': [r[0] for r in d['p'] if not any(ch.isdigit() for ch in r[0]) and r[0] not in ('Ціна','')], 'o': d.get('o', [])[:8], 'm': d.get('m', []), 's': d.get('s', []), 'x': d.get('x', '')}
          for d in data]
 cats = [c for c in ORDER if any(i['c'] == c for i in items)] + \
        sorted({i['c'] for i in items} - set(ORDER))
@@ -83,7 +83,7 @@ function tabs(){const n=c=>D.filter(d=>!c||d.c===c).length;
  $('chips').innerHTML=['',...STY].map(s=>`<button data-s="${esc(s)}" class="${s===sty?'on':''}">${s?esc(s):'Усі стилі'}</button>`).join('');}
 function card(d){const on=sel.has(d.a);
  return `<article class="c"><img loading="lazy" src="/catalog/img/${d.a}.jpg" alt="${esc(d.n)}"><div class="cb">
- <div class="art">${d.a}</div><div class="nm">${esc(d.n)}</div>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}
+ <div class="art">${d.a}</div><div class="nm">${esc(d.n)}</div>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<div class="ds" style="color:#4a453e;margin-top:4px">${esc(d.x)}</div>`:''}
  ${d.z.length?`<div class="k"><span>Розміри:</span> ${d.z.map(esc).join(' · ')}</div>`:''}${d.v.length?`<div class="k"><span>Варіанти:</span> ${d.v.map(esc).join(' · ')}</div>`:''}
  ${d.m.length?`<div class="k"><span>Матеріали:</span> ${d.m.map(esc).join(', ')}</div>`:''}
  ${d.o.length?`<div class="k"><span>Кольори:</span> ${d.o.length} варіант${d.o.length>4?'ів':d.o.length>1?'и':''}</div>`:''}
