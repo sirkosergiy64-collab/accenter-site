@@ -20,7 +20,7 @@ PAGES = [  # категорія, slug, H1, ключова фраза для titl
 ]
 esc = lambda s: html.escape(str(s), quote=True)
 fmt = lambda n: f'{n:,}'.replace(',', ' ')
-def price(a, b): return f'${fmt(a)}' if a == b else f'${fmt(a)}–{fmt(b)}'
+def price(a, b): return f'${fmt(a)}' if a == b else f'від ${fmt(a)}'
 def pl(n,a,b,c):
     m,h=n%10,n%100
     return f'{n} '+(a if m==1 and h!=11 else b if 2<=m<=4 and not 12<=h<=14 else c)
@@ -36,10 +36,10 @@ def page(cat, slug, h1, kw, where):
     mats = [m if m.isupper() or '/' in m else m.lower() for m in top(items, 'mt', 3)]
     stys = [s.lower() for s in top(items, 's', 3)]
     lo = low(items)
-    title = f'{kw} — {pl(len(items),"модель","моделі","моделей")}, від ${fmt(lo)} | Accenter'
-    desc = (f'{h1} {where}: {pl(len(items),"модель","моделі","моделей")} від ${fmt(lo)}. Матеріали: {", ".join(mats)}. '
+    title = f'{kw} — ціни від ${fmt(lo)} | Accenter'
+    desc = (f'{h1} {where}: ціни від ${fmt(lo)}. Матеріали: {", ".join(mats)}. '
             f'Стилі: {", ".join(stys)}. Виготовлення під замовлення, доставка в Україну та Європу.')
-    lead = (f'{pl(len(items),"модель","моделі","моделей")} {where} — від ${fmt(lo)}. Найчастіші матеріали: {", ".join(mats)}; '
+    lead = (f'{h1} {where} — ціни від ${fmt(lo)}. Найчастіші матеріали: {", ".join(mats)}; '
             f'стилі: {", ".join(stys)}. Виготовляємо під замовлення: змінимо розмір, колір чи оздоблення. '
             f'Доставка з фабрик Китаю в Україну та Європу.')
     cards = []

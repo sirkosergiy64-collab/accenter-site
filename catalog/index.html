@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Каталог дизайнерських меблів з цінами — 559 моделей | Accenter</title>
+<title>Каталог дизайнерських меблів з цінами | Accenter</title>
 <link rel="canonical" href="https://accenter.agency/catalog/">
-<meta name="description" content="Каталог Accenter: 559 моделей авторських меблів з цінами. Доставка в Україну та Європу з фабрик Китаю, виготовлення під запит.">
+<meta name="description" content="Каталог Accenter: авторські меблі з цінами. Доставка в Україну та Європу з фабрик Китаю, виготовлення під запит.">
 <link rel="icon" href="/assets/logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -123,6 +123,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .shp td{padding:8px 0;border-top:1px solid #3a352e;vertical-align:top}.shp td+td,.shp th+th{text-align:right;white-space:nowrap;padding-left:10px}
 .shp small{display:block;color:#a69e92;font-size:12px}
 .sh{max-height:88vh;overflow:auto}
+.pn{font-size:12px;color:var(--mute);margin-top:4px}
 </style>
 </head>
 <body>
@@ -141,7 +142,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
     <a href="viber://chat?number=%2B380735058504"><i style="background:#7360F2"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>Viber</a>
     <a href="https://t.me/+380735058504"><i style="background:#2AABEE"><svg viewBox="0 0 24 24"><path d="M2.5 11.3 20.6 4.3c.8-.3 1.6.4 1.3 1.3l-3 14.2c-.2.9-1.2 1.3-2 .7l-4.6-3.4-2.3 2.2c-.3.3-.8.1-.8-.3l.2-3.6 8.2-7.4-10.1 6.3-4.3-1.4c-.9-.3-.9-1.5-.7-1.6z"/></svg></i>Telegram</a>
    </div>
-   <a class="chan" href="/">← На головну</a> · <a class="chan" href="https://t.me/accentr_home">Наш канал: t.me/accentr_home</a>
+   <a class="chan" href="/">← На головну</a><br><a class="chan" href="https://t.me/accentr_home">Наш канал: t.me/accentr_home</a>
   </div>
  </div>
 </header>
@@ -183,7 +184,7 @@ const ls={get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.
 let R={USD:1,EUR:1,date:''},CUR=ls.get('accCur','USD');
 const conv=a=>CUR==='UAH'?Math.round(a*R.USD/10)*10:CUR==='EUR'?a*R.USD/R.EUR:a;
 const one=a=>CUR==='UAH'?fmt(conv(a))+' ₴':CUR==='EUR'?'€'+fmt(conv(a)):'$'+fmt(a);
-const price=(a,b)=>a===b?one(a):CUR==='UAH'?fmt(conv(a))+'–'+fmt(conv(b))+' ₴':(CUR==='EUR'?'€':'$')+fmt(conv(a))+'–'+fmt(conv(b));
+const price=(a,b)=>a===b?one(a):'від '+one(a);
 const $=id=>document.getElementById(id);
 const main=$('main'),tabs=$('tabs'),q=$('q');
 let DATA=[],CATS=[],FAV=new Set(ls.get('accFav',[])),VIEW=null;
@@ -199,7 +200,7 @@ function card(d){
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
   <div class="art">${esc(d.a)}</div><div class="nm">${esc(d.n)}</div>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}
-  <div class="pr">${rows}</div>${moreP}
+  <div class="pr">${rows}</div>${moreP}${d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
   <button class="dl">Ціна з доставкою до Львова →</button>
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
@@ -224,7 +225,7 @@ function render(){
   if(!list.length){main.innerHTML='<p class="empty">Нічого не знайдено. Змініть фільтри або пошук.</p>';return}
   main.innerHTML=CATS.map((c,i)=>{
     const items=list.filter(d=>d.c===c); if(!items.length)return '';
-    return `<section id="cat-${i}"><h2>${esc(c)} <small>${items.length}</small></h2><div class="grid">${items.map(card).join('')}</div></section>`;
+    return `<section id="cat-${i}"><h2>${esc(c)}</h2><div class="grid">${items.map(card).join('')}</div></section>`;
   }).join('');
   observe();
 }
@@ -279,14 +280,14 @@ function dims(label,cat){
 }
 function ship(d){
   return d.p.map(r=>{const x=dims(r[0],d.c);const v=(x[0]+SHIP.pad)*(x[1]+SHIP.pad)*(x[2]+SHIP.pad)/1e6;
-    return {lab:r[0],x,v,lo:v*SHIP.lo,hi:v*SHIP.hi,a:r[1],b:r[2]}});
+    return {lab:r[0],x,v,m:v*(SHIP.lo+SHIP.hi)/2,a:r[1],b:r[2]}});
 }
 function shipSheet(d){
-  const rows=ship(d).map(s=>`<tr><td>${esc(s.lab)}<small>${(s.lab.match(/\d+/g)||[]).length>=3?'':'≈ '+s.x.map(Math.round).join('×')+' см · '}${s.v.toFixed(2).replace('.',',')} м³ в упаковці</small></td><td>${price(Math.round(s.lo),Math.round(s.hi))}</td><td><b>${price(Math.round(s.a+s.lo),Math.round(s.b+s.hi))}</b></td></tr>`).join('');
+  const rows=ship(d).map(s=>`<tr><td>${esc(s.lab)}<small>${(s.lab.match(/\d+/g)||[]).length>=3?'':'≈ '+s.x.map(Math.round).join('×')+' см · '}${s.v.toFixed(2).replace('.',',')} м³ в упаковці</small></td><td>≈ ${one(Math.round(s.m))}</td><td><b>${s.a===s.b?'≈ ':'від '}${one(Math.round(s.a+s.m))}</b></td></tr>`).join('');
   $('shT').textContent='Орієнтовна ціна у Львові';$('shm').textContent=`${d.a} · ${d.n}`;
   $('shct').innerHTML=`<table class="shp"><thead><tr><th>Розмір</th><th>Доставка</th><th>Разом</th></tr></thead><tbody>${rows}</tbody></table>`;
   $('shct').onclick=null;
-  $('shn').innerHTML=`Морем «під ключ» до Львова: $${SHIP.lo}–${SHIP.hi} за м³ — фрахт, розмитнення й податки за тарифами перевізників. Об'єм — за габаритами з запасом на упаковку й дерев'яну обрешітку. Розрахунок орієнтовний: точну суму назве менеджер. Доставка 2–3 місяці.`;
+  $('shn').innerHTML=`Морем «під ключ» до Львова за середньою ставкою $${(SHIP.lo+SHIP.hi)/2} за м³ (у перевізників $${SHIP.lo}–${SHIP.hi}) — фрахт, розмитнення й податки за тарифами перевізників. Об'єм — за габаритами з запасом на упаковку й дерев'яну обрешітку. Розрахунок орієнтовний: точну суму назве менеджер. Доставка 2–3 місяці.`;
   $('sheet').hidden=false;
 }
 function openSheet(title,sub,links,copy,note){
@@ -332,8 +333,8 @@ up.addEventListener('click',()=>scrollTo({top:0}));
 Promise.all([fetch('data.json').then(r=>r.json()),fetch('rates.json').then(r=>r.json()).catch(()=>null)]).then(([d,r])=>{
   DATA=d;CATS=[...new Set(d.map(x=>x.c))];
   if(r){R=r}else if(CUR!=='USD'){CUR='USD'}
-  $('cnt').textContent=`${d.length} моделей · оновлено ${R.date||'27.11.2026'}`;
-  tabs.innerHTML=CATS.map((c,i)=>`<a href="#cat-${i}">${esc(c)}<b>${d.filter(x=>x.c===c).length}</b></a>`).join('');
+  $('cnt').textContent=`Ціни оновлено ${R.date||'27.11.2026'}`;
+  tabs.innerHTML=CATS.map((c,i)=>`<a href="#cat-${i}">${esc(c)}</a>`).join('');
   saveFav();chips();curUI();
   const sp=new URLSearchParams(location.search);
   for(const v of sp.getAll('s'))F.s.add(v);for(const v of sp.getAll('mt'))F.mt.add(v);if(F.s.size||F.mt.size)chips();

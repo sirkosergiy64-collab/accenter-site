@@ -40,7 +40,7 @@ main{max-width:1240px;margin:0 auto;padding:16px 18px 120px}
 .toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#fff;border:1px solid var(--line);padding:8px 14px;border-radius:10px;font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,.1)}
 </style></head><body>
 <header><h1>Колекція корпусних меблів</h1>
-<p class="sub">559 моделей: консолі, столи, буфети, комоди, тумби. Більшість моделей виготовляються в інших розмірах і кольорах на замовлення. Вартість і терміни — за запитом. Додайте моделі до добірки й поділіться посиланням із клієнтом.</p></header>
+<p class="sub">Консолі, столи, буфети, комоди, тумби. Більшість моделей виготовляються в інших розмірах і кольорах на замовлення. Вартість і терміни — за запитом. Додайте моделі до добірки й поділіться посиланням із клієнтом.</p></header>
 <div class="bar"><div class="bi">
 <div class="tabs" id="tabs"></div>
 <input class="q" id="q" type="search" placeholder="Пошук: артикул, назва, стиль" aria-label="Пошук">
@@ -58,7 +58,7 @@ if(!sel.size){try{JSON.parse(localStorage.getItem('pSel')||'[]').forEach(a=>sel.
 else only=true;
 function save(){try{localStorage.setItem('pSel',JSON.stringify([...sel]))}catch(e){}}
 function tabs(){const n=c=>D.filter(d=>!c||d.c===c).length;
- $('tabs').innerHTML=[['','Усі'],...CATS.map(c=>[c,c])].map(([v,l])=>`<button data-c="${esc(v)}" class="${v===cat?'on':''}">${esc(l)}<b>${n(v)}</b></button>`).join('');
+ $('tabs').innerHTML=[['','Усі'],...CATS.map(c=>[c,c])].map(([v,l])=>`<button data-c="${esc(v)}" class="${v===cat?'on':''}">${esc(l)}</button>`).join('');
  $('chips').innerHTML=['',...STY].map(s=>`<button data-s="${esc(s)}" class="${s===sty?'on':''}">${s?esc(s):'Усі стилі'}</button>`).join('');}
 function card(d){const on=sel.has(d.a);
  return `<article class="c"><img loading="lazy" src="/catalog/img/${d.a}.jpg" alt="${esc(d.n)}"><div class="cb">
@@ -69,7 +69,7 @@ function card(d){const on=sel.has(d.a);
  <button class="sel${on?' on':''}" data-a="${d.a}">${on?'✓ У добірці':'+ До добірки'}</button></div></article>`}
 function draw(){const ql=q.toLowerCase();
  const L=D.filter(d=>(only?sel.has(d.a):(!cat||d.c===cat)&&(!sty||d.s.includes(sty)))&&(!ql||(d.a+' '+d.n+' '+d.d+' '+d.s.join(' ')).toLowerCase().includes(ql)));
- $('cnt').textContent=only?`Добірка: ${L.length}`:`${L.length} моделей`;
+ $('cnt').textContent=only?'Ваша добірка':'';
  $('g').innerHTML=L.map(card).join('')||'<p class="empty">Нічого не знайдено</p>';
  $('dock').hidden=!sel.size;$('dn').textContent=`У добірці: ${sel.size}`;$('only').textContent=only?'Усі':'Показати';}
 $('tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;cat=b.dataset.c;only=false;tabs();draw();scrollTo(0,0)};
