@@ -5,6 +5,11 @@ from urllib.parse import quote
 
 SITE = 'https://accenter.agency'
 D = json.load(open('catalog/data.json', encoding='utf-8'))
+import glob as _g
+for _f in sorted(_g.glob('catalog/pending*.json')):
+    D += json.load(open(_f, encoding='utf-8'))
+NOP = lambda d: d['p'][0][1] is None
+MINP = lambda d: 10**9 if NOP(d) else min(r[1] for r in d['p'])
 STYLE = open('scripts/seo_style.css', encoding='utf-8').read()
 GTAG = open('scripts/gtag.html', encoding='utf-8').read()
 SLUG = {'Консолі': 'konsoli', 'Журнальні столи': 'zhurnalni-stoly', 'Буфети': 'bufety', 'Обідні столи': 'obidni-stoly',
@@ -33,7 +38,7 @@ def ship(lab, cat):
     v = (x[0] + PAD) * (x[1] + PAD) * (x[2] + PAD) / 1e6
     return v, v * (SHIP_LO + SHIP_HI) / 2
 
-def price(a, b): return f'${fmt(a)}' if a == b else f'від ${fmt(a)}'
+def price(a, b): return 'за запитом' if a is None else f'${fmt(a)}' if a == b else f'від ${fmt(a)}'
 
 CSS = STYLE + '''
 .pp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;padding:28px 0 8px}
@@ -58,13 +63,16 @@ table.t{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
 
 def page(d, rel):
     a, n, cat = d['a'], d['n'], d['c']
-    lo = min(r[1] for r in d['p'])
+    nop = NOP(d)
+    lo = None if nop else min(r[1] for r in d['p'])
     rows = []
-    for lab, p1, p2 in d['p']:
+    for lab, p1, p2 in ([] if nop else d['p']):
         v, s = ship(lab, cat)
         rows.append(f'<tr><td>{esc(lab)}<small>{f"{v:.2f}".replace(".", ",")} м³ в упаковці</small></td><td>{price(p1, p2)}</td>'
                     f'<td>≈ ${fmt(s)}</td><td class="tot">{"≈" if p1 == p2 else "від"} ${fmt(p1 + s)}</td></tr>')
     rows = ''.join(rows)
+    if nop:
+        rows = ''.join(f'<tr><td>{esc(lab)}</td><td colspan="3" style="text-align:right">за запитом</td></tr>' for lab, _, _ in d['p'])
     wa = 'https://wa.me/380735058504?text=' + quote(f'Добрий день! Цікавить модель {a} — {n}. {SITE}/catalog/m/{a}/')
     slug = SLUG.get(cat)
     crumbs = (f'<a href="/">Головна</a> / <a href="/catalog/">Каталог</a> / '
@@ -75,18 +83,18 @@ def page(d, rel):
     if d.get('s'): kv += f'<div class="kv"><b>Стиль</b>{esc(", ".join(d["s"]))}</div>'
     relh = ''.join(f'<article class="c"><a href="/catalog/m/{esc(r["a"])}/"><img src="/catalog/img/{esc(r["a"])}.jpg" alt="{esc(r["n"])}" loading="lazy" width="400" height="400"></a>'
                    f'<div><span class="art">{esc(r["a"])}</span><h2><a href="/catalog/m/{esc(r["a"])}/" style="text-decoration:none">{esc(r["n"])}</a></h2>'
-                   f'<p class="ds">{esc(r.get("d", ""))}</p><p><b>{price(min(x[1] for x in r["p"]), min(x[1] for x in r["p"]))}</b></p></div></article>' for r in rel)
-    desc = f'{n} ({a}) — {d.get("d", "")}. Ціна від ${fmt(lo)} без доставки. Виготовлення під замовлення, доставка в Україну та Європу.'
+                   f'<p class="ds">{esc(r.get("d", ""))}</p><p><b>{price(None if NOP(r) else MINP(r), None if NOP(r) else MINP(r))}</b></p></div></article>' for r in rel)
+    desc = f'{n} ({a}) — {d.get("d", "")}. {'Ціна за запитом.' if nop else f'Ціна від ${fmt(lo)} без доставки.'} Виготовлення під замовлення, доставка в Україну та Європу.'
     ld = {'@context': 'https://schema.org', '@type': 'Product', 'name': n, 'sku': a, 'description': desc,
           'image': f'{SITE}/catalog/img/{a}.jpg', 'brand': {'@type': 'Brand', 'name': 'Accenter'}, 'category': cat,
-          'offers': {'@type': 'AggregateOffer', 'priceCurrency': 'USD', 'lowPrice': lo, 'highPrice': max(r[2] for r in d['p']),
-                     'offerCount': len(d['p']), 'availability': 'https://schema.org/PreOrder', 'url': f'{SITE}/catalog/m/{a}/'}}
+          **({} if nop else {'offers': {'@type': 'AggregateOffer', 'priceCurrency': 'USD', 'lowPrice': lo, 'highPrice': max(r[2] for r in d['p']),
+                     'offerCount': len(d['p']), 'availability': 'https://schema.org/PreOrder', 'url': f'{SITE}/catalog/m/{a}/'}})}
     return f'''<!DOCTYPE html>
 <html lang="uk">
 <head>
 {GTAG}<meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>{esc(n)} {esc(a)} — ціна від ${fmt(lo)} | Accenter</title>
+<title>{esc(n)} {esc(a)} — {'ціна за запитом' if nop else f'ціна від ${fmt(lo)}'} | Accenter</title>
 <meta name="description" content="{esc(desc)}">
 <link rel="canonical" href="{SITE}/catalog/m/{a}/">
 <meta property="og:title" content="{esc(n)} — Accenter"><meta property="og:image" content="{SITE}/catalog/img/{a}.jpg"><meta property="og:url" content="{SITE}/catalog/m/{a}/">
@@ -105,8 +113,8 @@ def page(d, rel):
    <span class="art">{esc(a)}</span>
    <h1>{esc(n)}</h1>
    {f'<p class="ds">{esc(d["d"])}</p>' if d.get('d') else ''}
-   <table class="t"><thead><tr><th>Розмір</th><th>Ціна</th><th>Доставка</th><th>У Львові</th></tr></thead><tbody>{rows}</tbody></table>
-   <p class="sn">Ціна без доставки. Доставка морем «під ключ» до Львова — орієнтовно, за середньою ставкою ${(SHIP_LO + SHIP_HI) // 2} за м³ (у перевізників ${SHIP_LO}–{SHIP_HI}), з упаковкою й дерев'яною обрешіткою. Точну суму назве менеджер. Курс фіксуємо перед оплатою.</p>
+   <table class="t"><thead><tr><th>Розмір</th>{'<th colspan="3" style="text-align:right">Ціна</th>' if nop else '<th>Ціна</th><th>Доставка</th><th>У Львові</th>'}</tr></thead><tbody>{rows}</tbody></table>
+   {'<p class="sn">Вартість і термін виготовлення назве менеджер — напишіть нам, розрахуємо з доставкою.</p>' if nop else f'''<p class="sn">Ціна без доставки. Доставка морем «під ключ» до Львова — орієнтовно, за середньою ставкою ${(SHIP_LO + SHIP_HI) // 2} за м³ (у перевізників ${SHIP_LO}–{SHIP_HI}), з упаковкою й дерев'яною обрешіткою. Точну суму назве менеджер. Курс фіксуємо перед оплатою.</p>'''}
    {kv}
    <div class="cta"><a class="p" href="{wa}" target="_blank" rel="noopener">Запитати про модель</a><a class="o" href="https://t.me/+380735058504" target="_blank" rel="noopener">Telegram</a><a class="o" href="/catalog/?m={a}">У каталозі · ₴ / €</a></div>
    <ul class="trust"><li>Виготовлення під замовлення: розмір, колір, оздоблення</li><li>Фото й відео саме вашого товару зі складу в Гуанчжоу перед відправкою</li><li>Передоплата 50%, решта — на етапі доставки</li><li>Оплата в $, ₴, криптовалюті або на рахунок ФОП / ТОВ</li></ul>
@@ -124,7 +132,7 @@ if os.path.isdir('catalog/m'):
     shutil.rmtree('catalog/m')
 for d in D:
     same = [x for x in D if x['c'] == d['c'] and x['a'] != d['a']]
-    common = sorted(same, key=lambda x: (-len(set(x.get('s', [])) & set(d.get('s', []))), abs(min(r[1] for r in x['p']) - min(r[1] for r in d['p']))))[:4]
+    common = sorted(same, key=lambda x: (-len(set(x.get('s', [])) & set(d.get('s', []))), abs(MINP(x) - MINP(d))))[:4]
     os.makedirs(f'catalog/m/{d["a"]}', exist_ok=True)
     open(f'catalog/m/{d["a"]}/index.html', 'w', encoding='utf-8').write(page(d, common))
 

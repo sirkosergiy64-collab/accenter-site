@@ -143,6 +143,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .hlpm b{color:#EEE8DC;font:500 18px Lora,serif}.hlpm span{color:#a69e92;font-size:12px;margin-bottom:4px}
 .hlpm a{color:#EEE8DC;text-decoration:none;font-size:14px;padding:10px 12px;border-radius:10px;background:#2a2621}.hlpm a:hover{background:#3a352e}
 @media(max-width:480px){.hlpb span{display:none}.hlpb{width:48px;padding:0;justify-content:center}}
+.rq{margin-top:6px;font:600 15px Inter,sans-serif;color:var(--gold2)}
 </style>
 </head>
 <body>
@@ -205,7 +206,9 @@ const ls={get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.
 let R={USD:1,EUR:1,date:''},CUR=ls.get('accCur','USD');
 const conv=a=>CUR==='UAH'?Math.round(a*R.USD/10)*10:CUR==='EUR'?a*R.USD/R.EUR:a;
 const one=a=>CUR==='UAH'?fmt(conv(a))+' ₴':CUR==='EUR'?'€'+fmt(conv(a)):'$'+fmt(a);
-const price=(a,b)=>a===b?one(a):'від '+one(a);
+const price=(a,b)=>a==null?'—':a===b?one(a):'від '+one(a);
+const noP=d=>d.p.every(r=>r[1]==null);
+const DLB='<button class="dl"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>Розрахувати доставку до Львова</span></button>';
 const $=id=>document.getElementById(id);
 const main=$('main'),tabs=$('tabs'),q=$('q');
 let DATA=[],CATS=[],FAV=new Set(ls.get('accFav',[])),VIEW=null;
@@ -216,7 +219,7 @@ const colorsOf=d=>d._cl||(d._cl=(t=>COLORS.filter(([,re])=>re.test(t)).map(([n])
 const PR=[['до $500',0,500],['$500–1 000',500,1000],['$1 000–2 000',1000,2000],['від $2 000',2000,1e9]];
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 function card(d){
-  const row=r=>`<div class="r"><span>${esc(r[0])}</span><b>${price(r[1],r[2])}</b></div>`;const rows=d.p.slice(0,6).map(row).join('');
+  const row=r=>`<div class="r"><span>${esc(r[0])}</span>${r[1]==null?'':`<b>${price(r[1],r[2])}</b>`}</div>`;const rows=d.p.slice(0,6).map(row).join('');
   const moreP=d.p.length>6?`<button class="more" data-k="p">ще ${pl(d.p.length-6,'розмір','розміри','розмірів')}</button>`:'';
   const ops=d.o.slice(0,2).map(o=>`<li class="one">${esc(o)}</li>`).join('');
   const moreO=(d.o.length>2||d.o.some(o=>o.length>34))?`<button class="more" data-k="o">Більше варіантів${d.o.length>2?' ('+d.o.length+')':''}</button>`:'';
@@ -224,10 +227,10 @@ function card(d){
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
   <div class="art">${esc(d.a)}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}
-  <div class="pr">${rows}</div>${moreP}${d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}${(()=>{const s=ship(d).reduce((x,y)=>x.a+x.m<=y.a+y.m?x:y);return `<div class="lv">Орієнтовно у Львові з доставкою: <b>від ${one(Math.round(s.a+s.m))}</b></div>`})()}
-  ${det}<button class="dl"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><span>Розрахувати доставку до Львова</span></button><div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
+  <div class="pr">${rows}</div>${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}${noP(d)?'':(()=>{const s=ship(d).reduce((x,y)=>x.a+x.m<=y.a+y.m?x:y);return `<div class="lv">Орієнтовно у Львові з доставкою: <b>від ${one(Math.round(s.a+s.m))}</b></div>`})()}
+  ${det}${noP(d)?'':DLB}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
-const minp=d=>Math.min(...d.p.map(r=>r[1]));
+const minp=d=>noP(d)?Infinity:Math.min(...d.p.filter(r=>r[1]!=null).map(r=>r[1]));
 function filtered(){
   const f=q.value.trim().toLowerCase();
   return DATA.filter(d=>{
@@ -357,7 +360,7 @@ let tm;q.addEventListener('input',()=>{clearTimeout(tm);tm=setTimeout(render,200
 const up=$('up');
 addEventListener('scroll',()=>up.classList.toggle('show',scrollY>600),{passive:true});
 up.addEventListener('click',()=>scrollTo({top:0}));
-Promise.all([fetch('data.json').then(r=>r.json()),fetch('rates.json').then(r=>r.json()).catch(()=>null)]).then(([d,r])=>{
+Promise.all([Promise.all([fetch('data.json').then(r=>r.json()),fetch('pending12.json').then(r=>r.ok?r.json():[]).catch(()=>[])]).then(([a,b])=>a.concat(b)),fetch('rates.json').then(r=>r.json()).catch(()=>null)]).then(([d,r])=>{
   DATA=d;CATS=[...new Set(d.map(x=>x.c))];
   if(r){R=r}else if(CUR!=='USD'){CUR='USD'}
   $('cnt').textContent=`Ціни оновлено ${R.date||'27.11.2026'}`;
