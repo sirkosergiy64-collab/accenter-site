@@ -112,7 +112,7 @@ def page(d, rel):
    <h1>{esc(n)}</h1>
    {f'<p class="ds">{esc(d["d"])}</p>' if d.get('d') else ''}
    {f'<p style="margin:0 0 16px;line-height:1.6;color:#4a453e">{esc(d["x"])}</p>' if d.get('x') else ''}
-   <table class="t"><thead><tr><th>Розмір</th>{'<th colspan="3" style="text-align:right">Ціна</th>' if nop else '<th>Ціна під ключ</th>'}</tr></thead><tbody>{rows}</tbody></table>
+   <table class="t"><thead><tr><th>Розмір</th>{'<th colspan="3" style="text-align:right">Ціна</th>' if nop else '<th>Ціна з доставкою в Україну</th>'}</tr></thead><tbody>{rows}</tbody></table>
    {'<p class="sn">Вартість і термін виготовлення назве менеджер — напишіть нам, розрахуємо з доставкою.</p>' if nop else '<p class="sn">Ціни в доларах США під ключ — з доставкою до Львова. Доставку по Україні (Нова пошта) сплачуєте за тарифом перевізника. Курс фіксуємо перед оплатою.</p>'}
    {kv}
    <div class="cta"><a class="p" href="{wa}" target="_blank" rel="noopener">Запитати про модель</a><a class="o" href="https://t.me/+380735058504" target="_blank" rel="noopener">Telegram</a><a class="o" href="/catalog/?m={a}">У каталозі · ₴ / €</a></div>

@@ -48,7 +48,7 @@ def page(cat, slug, h1, kw, where):
             f'Доставка з фабрик Китаю в Україну та Європу.')
     cards = []
     for d in items:
-        rows = ''.join(f'<li><span>{esc(r[0])}</span><b>{price(r[1], r[2])}</b></li>' for r in d['p'][:4]) if d['p'][0][1] is not None else ''.join(f'<li><span>{esc(r[0])}</span></li>' for r in d['p'][:4]) + '<li><span>Ціна</span><b>за запитом</b></li>'
+        rows = ''.join(f'<li><span>{esc(r[0])}</span><b>{price(r[1], r[2])}</b></li>' for r in d['p'][:4]) + '<li class="dv"><span>з доставкою в Україну</span></li>' if d['p'][0][1] is not None else ''.join(f'<li><span>{esc(r[0])}</span></li>' for r in d['p'][:4]) + '<li><span>Ціна</span><b>за запитом</b></li>'
         cards.append(
             f'<article class="c"><img src="/catalog/img/{esc(d["a"])}.jpg" alt="{esc(d["n"])}" loading="lazy" width="400" height="400">'
             f'<div><span class="art">{esc(d["a"])}</span><h2><a href="/catalog/m/{esc(d["a"])}/" style="text-decoration:none">{esc(d["n"])}</a></h2>{"<p class=ds>"+esc(d.get("d",""))+"</p>" if d.get("d") else ""}<ul>{rows}</ul>'
@@ -85,7 +85,8 @@ def page(cat, slug, h1, kw, where):
 <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">{json.dumps(crumbs, ensure_ascii=False)}</script>
 <script type="application/ld+json">{json.dumps(ld, ensure_ascii=False)}</script>
-<style>{STYLE}</style>
+<style>{STYLE}li.dv span{{color:#9a7a3e;font-weight:600;font-size:13px}}
+</style>
 </head>
 <body>
 <nav><div class="wrap"><a class="brand" href="/"><img src="/assets/logo.jpg" alt="">ACCENTER</a><a class="btn" href="/catalog/#cat-{i}">Фільтри й обране</a></div></nav>

@@ -135,6 +135,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .shp small{display:block;color:#a69e92;font-size:12px}
 .sh{max-height:88vh;overflow:auto}
 .pn{font-size:12px;color:var(--mute);margin-top:4px}
+.dv{display:flex;align-items:center;gap:6px;margin-top:6px;font-size:12.5px;color:var(--gold2);font-weight:600}.dv svg{flex:none}
 .hlp{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:20px;z-index:40;font-family:Inter,sans-serif}
 .hlpb{display:flex;align-items:center;gap:8px;height:48px;padding:0 18px 0 14px;border:0;border-radius:99px;background:#1d1a16;color:#EEE8DC;font:600 14px Inter,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;border:1px solid #C9A063}
 .hlpb svg{color:#C9A063}
@@ -228,7 +229,7 @@ function card(d){
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
   <div class="art">${esc(d.a)}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
-  <div class="pr">${rows}</div>${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
+  <div class="pr">${rows}</div>${noP(d)?'':'<div class="dv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>Ціна з доставкою в Україну</div>'}${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
 const minp=d=>noP(d)?Infinity:Math.min(...d.p.filter(r=>r[1]!=null).map(r=>r[1]));
