@@ -124,6 +124,14 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .shp small{display:block;color:#a69e92;font-size:12px}
 .sh{max-height:88vh;overflow:auto}
 .pn{font-size:12px;color:var(--mute);margin-top:4px}
+.hlp{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:20px;z-index:40;font-family:Inter,sans-serif}
+.hlpb{display:flex;align-items:center;gap:8px;height:48px;padding:0 18px 0 14px;border:0;border-radius:99px;background:#1d1a16;color:#EEE8DC;font:600 14px Inter,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;border:1px solid #C9A063}
+.hlpb svg{color:#C9A063}
+.hlpm{position:absolute;left:0;bottom:58px;width:260px;background:#1d1a16;border:1px solid #3a352e;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:6px}
+.hlpm[hidden]{display:none}
+.hlpm b{color:#EEE8DC;font:500 18px Lora,serif}.hlpm span{color:#a69e92;font-size:12px;margin-bottom:4px}
+.hlpm a{color:#EEE8DC;text-decoration:none;font-size:14px;padding:10px 12px;border-radius:10px;background:#2a2621}.hlpm a:hover{background:#3a352e}
+@media(max-width:480px){.hlpb span{display:none}.hlpb{width:48px;padding:0;justify-content:center}}
 </style>
 </head>
 <body>
@@ -155,8 +163,10 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
    <button class="tb fv" id="favbtn" aria-label="Обране"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg><span id="favn">0</span></button>
   </div>
   <div class="fp" id="fp" hidden>
+   <div class="fg"><div class="fl">Кімната</div><div class="chips" id="fr"></div></div>
    <div class="fg"><div class="fl">Стиль</div><div class="chips" id="fs"></div></div>
    <div class="fg"><div class="fl">Матеріал</div><div class="chips" id="fm"></div></div>
+   <div class="fg"><div class="fl">Колір</div><div class="chips" id="fc"></div></div>
    <div class="fg"><div class="fl">Ціна</div><div class="chips" id="fpr"></div></div>
    <div class="fa"><button class="tb" id="freset">Скинути</button><button class="tb g" id="fdone">Показати</button></div>
   </div>
@@ -188,7 +198,10 @@ const price=(a,b)=>a===b?one(a):'від '+one(a);
 const $=id=>document.getElementById(id);
 const main=$('main'),tabs=$('tabs'),q=$('q');
 let DATA=[],CATS=[],FAV=new Set(ls.get('accFav',[])),VIEW=null;
-const F={s:new Set(),mt:new Set(),pr:null};
+const F={s:new Set(),mt:new Set(),r:new Set(),cl:new Set(),pr:null};
+const ROOMS={'Вітальня':['Журнальні столи','ТВ-тумби','Приставні столики','Консолі','Буфети'],'Їдальня':['Обідні столи','Буфети','Шафи й вітрини','Консолі'],'Спальня':['Комоди','Туалетні столики','Приставні столики'],'Передпокій':['Консолі','Комоди','Шафи й вітрини'],'Кабінет':['Інше','Шафи й вітрини','Приставні столики']};
+const COLORS=[['Білий',/біл|молочн|снігов/],['Кремовий / бежевий',/крем|беж|слонов|пісочн|вершк/],['Сірий',/сір|графіт/],['Чорний',/чорн/],['Дерево / горіх',/горіх|коричн|тик|кавов|шоколад|вишн|дуб|натурал|ясен/],['Золото / латунь',/золот|латун|шампан|бронз/],['Зелений',/зелен|смараг|олив/],['Синій',/син|блак/]];
+const colorsOf=d=>d._cl||(d._cl=(t=>COLORS.filter(([,re])=>re.test(t)).map(([n])=>n))([...(d.o||[]),d.n,d.d||'',...(d.m||[])].join(' ').toLowerCase()));
 const PR=[['до $500',0,500],['$500–1 000',500,1000],['$1 000–2 000',1000,2000],['від $2 000',2000,1e9]];
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
 function card(d){
@@ -211,13 +224,15 @@ function filtered(){
     if(f&&!(d.a+' '+d.n+' '+(d.d||'')+' '+d.c+' '+d.m.join(' ')).toLowerCase().includes(f))return false;
     if(F.s.size&&!d.s.some(x=>F.s.has(x)))return false;
     if(F.mt.size&&!d.mt.some(x=>F.mt.has(x)))return false;
+    if(F.r.size&&![...F.r].some(r=>ROOMS[r].includes(d.c)))return false;
+    if(F.cl.size&&!colorsOf(d).some(x=>F.cl.has(x)))return false;
     if(F.pr!=null){const p=minp(d),r=PR.at(F.pr);if(p<r[1]||p>=r[2])return false}
     return true;
   });
 }
 function render(){
   const list=filtered();
-  const n=F.s.size+F.mt.size+(F.pr!=null?1:0);
+  const n=F.s.size+F.mt.size+F.r.size+F.cl.size+(F.pr!=null?1:0);
   $('fcnt').textContent=n?'· '+n:'';
   $('fdone').textContent='Показати '+pl(list.length,'модель','моделі','моделей');
   banner();
@@ -303,13 +318,15 @@ $('lbx').addEventListener('click',e=>e.currentTarget.classList.remove('show'));
 $('favbtn').onclick=()=>VIEW&&VIEW.kind==='fav'?setView(null):setView({kind:'fav',set:new Set(FAV)});
 $('fbtn').onclick=()=>{const p=$('fp');p.hidden=!p.hidden;$('fbtn').setAttribute('aria-expanded',!p.hidden)};
 $('fdone').onclick=()=>{$('fp').hidden=true;$('fbtn').setAttribute('aria-expanded','false');scrollTo({top:main.offsetTop-document.querySelector('.bar').offsetHeight,behavior:'instant'})};
-$('freset').onclick=()=>{F.s.clear();F.mt.clear();F.pr=null;chips();render()};
+$('freset').onclick=()=>{F.s.clear();F.mt.clear();F.r.clear();F.cl.clear();F.pr=null;chips();render()};
 function chips(){
   const cnt=(k,v)=>DATA.filter(d=>d[k].includes(v)).length;
   const st=[...new Set(DATA.flatMap(d=>d.s))].sort((a,b)=>cnt('s',b)-cnt('s',a));
   const mt=[...new Set(DATA.flatMap(d=>d.mt))].sort((a,b)=>cnt('mt',b)-cnt('mt',a));
   $('fs').innerHTML=st.map(v=>`<button class="chip${F.s.has(v)?' on':''}" data-g="s" data-v="${esc(v)}">${esc(v)}</button>`).join('');
   $('fm').innerHTML=mt.map(v=>`<button class="chip${F.mt.has(v)?' on':''}" data-g="mt" data-v="${esc(v)}">${esc(v)}</button>`).join('');
+  $('fr').innerHTML=Object.keys(ROOMS).map(v=>`<button class="chip${F.r.has(v)?' on':''}" data-g="r" data-v="${esc(v)}">${esc(v)}</button>`).join('');
+  $('fc').innerHTML=COLORS.map(([v])=>`<button class="chip${F.cl.has(v)?' on':''}" data-g="cl" data-v="${esc(v)}">${esc(v)}</button>`).join('');
   $('fpr').innerHTML=PR.map((r,i)=>`<button class="chip${F.pr===i?' on':''}" data-g="pr" data-v="${i}">${esc(r[0])}</button>`).join('');
 }
 $('fp').addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const g=b.dataset.g,v=b.dataset.v;
@@ -336,7 +353,7 @@ Promise.all([fetch('data.json').then(r=>r.json()),fetch('rates.json').then(r=>r.
   tabs.innerHTML=CATS.map((c,i)=>`<a href="#cat-${i}">${esc(c)}</a>`).join('');
   saveFav();chips();curUI();
   const sp=new URLSearchParams(location.search);
-  for(const v of sp.getAll('s'))F.s.add(v);for(const v of sp.getAll('mt'))F.mt.add(v);if(F.s.size||F.mt.size)chips();
+  for(const v of sp.getAll('s'))F.s.add(v);for(const v of sp.getAll('mt'))F.mt.add(v);for(const v of sp.getAll('r'))if(ROOMS[v])F.r.add(v);for(const v of sp.getAll('cl'))F.cl.add(v);if(F.s.size||F.mt.size||F.r.size||F.cl.size)chips();
   if(sp.get('sel'))VIEW={kind:'sel',set:new Set(sp.get('sel').split(',').filter(Boolean))};
   else if(sp.get('m'))VIEW={kind:'one',set:new Set([sp.get('m')])};
   render();
@@ -344,5 +361,9 @@ Promise.all([fetch('data.json').then(r=>r.json()),fetch('rates.json').then(r=>r.
 }).catch(()=>{main.innerHTML='<p class="empty">Не вдалося завантажити каталог. Оновіть сторінку.</p>'});
 }
 </script>
+<div class="hlp" id="hlp"><div class="hlpm" id="hlpm" hidden><b>Допоможемо з вибором</b><span>Відповідає менеджер Сергій</span>
+<a href="https://t.me/+380735058504" target="_blank" rel="noopener">Telegram</a><a href="viber://chat?number=%2B380735058504">Viber</a><a href="https://wa.me/380735058504?text=%D0%94%D0%BE%D0%B1%D1%80%D0%B8%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9D%D0%B0%D0%B4%D1%81%D0%B8%D0%BB%D0%B0%D1%8E%20%D1%84%D0%BE%D1%82%D0%BE%20%D1%96%D0%BD%D1%82%D0%B5%D1%80%27%D1%94%D1%80%D1%83%20/%20%D1%80%D0%B5%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81%20%E2%80%94%20%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B6%D1%96%D1%82%D1%8C%20%D0%BF%D1%96%D0%B4%D1%96%D0%B1%D1%80%D0%B0%D1%82%D0%B8%20%D0%BC%D0%B5%D0%B1%D0%BB%D1%96." target="_blank" rel="noopener">Підбір за фото (WhatsApp)</a><a href="tel:+380735058504">Подзвонити · 073 505 85 04</a></div>
+<button class="hlpb" id="hlpb" aria-expanded="false" aria-controls="hlpm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l.9-4.6A8 8 0 1 1 21 12z"/></svg><span>Допоможемо з вибором</span></button></div>
+<script>(()=>{const b=document.getElementById('hlpb'),m=document.getElementById('hlpm');b.onclick=()=>{m.hidden=!m.hidden;b.setAttribute('aria-expanded',!m.hidden)};document.addEventListener('click',e=>{if(!e.target.closest('#hlp'))m.hidden=true})})()</script>
 </body>
 </html>

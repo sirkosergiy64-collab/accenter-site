@@ -124,6 +124,19 @@ h2{font:400 clamp(30px,3.6vw,42px)/1.1 Lora,serif;margin:0 0 12px;text-wrap:bala
 .cat:hover img{transform:scale(1.04)}
 .cat span{position:absolute;left:0;right:0;bottom:0;padding:40px 16px 14px;background:linear-gradient(transparent,rgba(20,18,15,.82));color:#fff;font:500 19px Lora,serif;display:flex;justify-content:space-between;align-items:baseline}
 .cat small{font:500 13px Inter,sans-serif;color:var(--gold)}
+.cat.photo{background:#1d1a16;border:1px solid rgba(201,160,99,.5)}
+.cat .ph{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;padding:18px;color:#C9A063}
+.cat .ph b{color:#EEE8DC;font:500 20px Lora,serif}.cat .ph small{color:#d9cfbf;font:400 13px/1.4 Inter,sans-serif}
+@media(max-width:700px){.rooms .cat:last-child{grid-column:auto;aspect-ratio:1}}
+.hlp{position:fixed;left:max(16px,env(safe-area-inset-left));bottom:20px;z-index:40;font-family:Inter,sans-serif}
+.hlpb{display:flex;align-items:center;gap:8px;height:48px;padding:0 18px 0 14px;border:0;border-radius:99px;background:#1d1a16;color:#EEE8DC;font:600 14px Inter,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.3);cursor:pointer;border:1px solid #C9A063}
+.hlpb svg{color:#C9A063}
+.hlpm{position:absolute;left:0;bottom:58px;width:260px;background:#1d1a16;border:1px solid #3a352e;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,0,0,.35);display:flex;flex-direction:column;gap:6px}
+.hlpm[hidden]{display:none}
+.hlpm b{color:#EEE8DC;font:500 18px Lora,serif}.hlpm span{color:#a69e92;font-size:12px;margin-bottom:4px}
+.hlpm a{color:#EEE8DC;text-decoration:none;font-size:14px;padding:10px 12px;border-radius:10px;background:#2a2621}.hlpm a:hover{background:#3a352e}
+@media(max-width:480px){.hlpb span{display:none}.hlpb{width:48px;padding:0;justify-content:center}}
+
 .all{margin-top:24px}
 .dark{background:var(--band);color:var(--cream)}
 .dark .sub{color:var(--mute)}
@@ -167,7 +180,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
 <body>
 <nav><div class="wrap">
  <a class="brand" href="#top"><img src="/assets/logo.jpg" alt="">ACCENTER</a>
- <div class="menu"><a href="#directions">Напрямки</a><a href="/catalog/">Каталог</a><a href="#selections">Добірки</a><a href="#how">Як ми працюємо</a><a href="#designers">Агенціям</a><a href="#faq">Питання</a><a href="#contacts">Контакти</a></div>
+ <div class="menu"><a href="#directions">Напрямки</a><a href="/catalog/">Каталог</a><a href="#rooms">Комплектація</a><a href="#selections">Добірки</a><a href="#how">Як ми працюємо</a><a href="#designers">Агенціям</a><a href="#faq">Питання</a><a href="#contacts">Контакти</a></div>
  <a class="btn g" href="/catalog/">Каталог</a>
 </div></nav>
 
@@ -210,19 +223,25 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
  </div>
 </div></section>
 
+<section id="rooms" style="padding-top:0"><div class="wrap">
+ <h2>Комплектація інтер'єру</h2>
+ <p class="sub">Оберіть кімнату — покажемо меблі, які підходять саме для неї. Далі звузьте вибір за стилем, кольором і матеріалом.</p>
+ <div class="cats rooms"><a class="cat" href="/catalog/?r=%D0%92%D1%96%D1%82%D0%B0%D0%BB%D1%8C%D0%BD%D1%8F"><img loading="lazy" src="/catalog/img/CT-09008.jpg" alt=""><span>Вітальня</span></a><a class="cat" href="/catalog/?r=%D0%87%D0%B4%D0%B0%D0%BB%D1%8C%D0%BD%D1%8F"><img loading="lazy" src="/catalog/img/DT-09006.jpg" alt=""><span>Їдальня</span></a><a class="cat" href="/catalog/?r=%D0%A1%D0%BF%D0%B0%D0%BB%D1%8C%D0%BD%D1%8F"><img loading="lazy" src="/catalog/img/VT-09002.jpg" alt=""><span>Спальня</span></a><a class="cat" href="/catalog/?r=%D0%9F%D0%B5%D1%80%D0%B5%D0%B4%D0%BF%D0%BE%D0%BA%D1%96%D0%B9"><img loading="lazy" src="/catalog/img/CN-02027.jpg" alt=""><span>Передпокій</span></a><a class="cat" href="/catalog/?r=%D0%9A%D0%B0%D0%B1%D1%96%D0%BD%D0%B5%D1%82"><img loading="lazy" src="/catalog/img/DS-01001.jpg" alt=""><span>Кабінет</span></a><a class="cat photo" href="https://wa.me/380735058504?text=%D0%94%D0%BE%D0%B1%D1%80%D0%B8%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9D%D0%B0%D0%B4%D1%81%D0%B8%D0%BB%D0%B0%D1%8E%20%D1%84%D0%BE%D1%82%D0%BE%20%D1%96%D0%BD%D1%82%D0%B5%D1%80%27%D1%94%D1%80%D1%83%20/%20%D1%80%D0%B5%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81%20%E2%80%94%20%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B6%D1%96%D1%82%D1%8C%20%D0%BF%D1%96%D0%B4%D1%96%D0%B1%D1%80%D0%B0%D1%82%D0%B8%20%D0%BC%D0%B5%D0%B1%D0%BB%D1%96." target="_blank" rel="noopener"><div class="ph"><svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l2-3h6l2 3h3v12H4z"/><circle cx="12" cy="13" r="3.5"/></svg><b>Підбір за фото</b><small>Надішліть фото інтер'єру чи референс — підберемо схожі меблі</small></div></a></div>
+</div></section>
+
 <section style="padding-top:0"><div class="wrap">
  <h2>Каталог корпусних меблів</h2>
  <p class="sub">Ціни, розміри, варіанти кольорів і матеріали кожної моделі.</p>
  <div class="cats">
-  <a class="cat" href="/catalog/bufety/"><img loading="lazy" src="/catalog/img/SB-02004.jpg" alt=""><span>Буфети<small>67</small></span></a>
-  <a class="cat" href="/catalog/komody/"><img loading="lazy" src="/catalog/img/CH-01005.jpg" alt=""><span>Комоди<small>44</small></span></a>
-  <a class="cat" href="/catalog/konsoli/"><img loading="lazy" src="/catalog/img/CN-02005.jpg" alt=""><span>Консолі<small>131</small></span></a>
-  <a class="cat" href="/catalog/tv-tumby/"><img loading="lazy" src="/catalog/img/TV-02003.jpg" alt=""><span>ТВ-тумби<small>25</small></span></a>
-  <a class="cat" href="/catalog/zhurnalni-stoly/"><img loading="lazy" src="/catalog/img/CT-01006.jpg" alt=""><span>Журнальні столи<small>104</small></span></a>
-  <a class="cat" href="/catalog/prystavni-stolyky/"><img loading="lazy" src="/catalog/img/ST-05002.jpg" alt=""><span>Приставні столики<small>47</small></span></a>
-  <a class="cat" href="/catalog/obidni-stoly/"><img loading="lazy" src="/catalog/img/DT-01007.jpg" alt=""><span>Обідні столи<small>60</small></span></a>
-  <a class="cat" href="/catalog/tualetni-stolyky/"><img loading="lazy" src="/catalog/img/VT-01004.jpg" alt=""><span>Туалетні столики<small>35</small></span></a>
-  <a class="cat" href="/catalog/shafy-vitryny/"><img loading="lazy" src="/catalog/img/CB-02001.jpg" alt=""><span>Шафи й вітрини<small>32</small></span></a>
+  <a class="cat" href="/catalog/bufety/"><img loading="lazy" src="/catalog/img/SB-02004.jpg" alt=""><span>Буфети</span></a>
+  <a class="cat" href="/catalog/komody/"><img loading="lazy" src="/catalog/img/CH-01005.jpg" alt=""><span>Комоди</span></a>
+  <a class="cat" href="/catalog/konsoli/"><img loading="lazy" src="/catalog/img/CN-02005.jpg" alt=""><span>Консолі</span></a>
+  <a class="cat" href="/catalog/tv-tumby/"><img loading="lazy" src="/catalog/img/TV-02003.jpg" alt=""><span>ТВ-тумби</span></a>
+  <a class="cat" href="/catalog/zhurnalni-stoly/"><img loading="lazy" src="/catalog/img/CT-01006.jpg" alt=""><span>Журнальні столи</span></a>
+  <a class="cat" href="/catalog/prystavni-stolyky/"><img loading="lazy" src="/catalog/img/ST-05002.jpg" alt=""><span>Приставні столики</span></a>
+  <a class="cat" href="/catalog/obidni-stoly/"><img loading="lazy" src="/catalog/img/DT-01007.jpg" alt=""><span>Обідні столи</span></a>
+  <a class="cat" href="/catalog/tualetni-stolyky/"><img loading="lazy" src="/catalog/img/VT-01004.jpg" alt=""><span>Туалетні столики</span></a>
+  <a class="cat" href="/catalog/shafy-vitryny/"><img loading="lazy" src="/catalog/img/CB-02001.jpg" alt=""><span>Шафи й вітрини</span></a>
  </div>
  <div class="all"><a class="btn g" href="/catalog/">Каталог</a></div>
 </div></section>
@@ -332,5 +351,9 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
 </div></section>
 
 <footer><div class="wrap"><span>© 2026 Accenter · авторські меблі</span><span>accenter.agency · 073 505 85 04</span></div></footer>
+<div class="hlp" id="hlp"><div class="hlpm" id="hlpm" hidden><b>Допоможемо з вибором</b><span>Відповідає менеджер Сергій</span>
+<a href="https://t.me/+380735058504" target="_blank" rel="noopener">Telegram</a><a href="viber://chat?number=%2B380735058504">Viber</a><a href="https://wa.me/380735058504?text=%D0%94%D0%BE%D0%B1%D1%80%D0%B8%D0%B9%20%D0%B4%D0%B5%D0%BD%D1%8C%21%20%D0%9D%D0%B0%D0%B4%D1%81%D0%B8%D0%BB%D0%B0%D1%8E%20%D1%84%D0%BE%D1%82%D0%BE%20%D1%96%D0%BD%D1%82%D0%B5%D1%80%27%D1%94%D1%80%D1%83%20/%20%D1%80%D0%B5%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%81%20%E2%80%94%20%D0%B4%D0%BE%D0%BF%D0%BE%D0%BC%D0%BE%D0%B6%D1%96%D1%82%D1%8C%20%D0%BF%D1%96%D0%B4%D1%96%D0%B1%D1%80%D0%B0%D1%82%D0%B8%20%D0%BC%D0%B5%D0%B1%D0%BB%D1%96." target="_blank" rel="noopener">Підбір за фото (WhatsApp)</a><a href="tel:+380735058504">Подзвонити · 073 505 85 04</a></div>
+<button class="hlpb" id="hlpb" aria-expanded="false" aria-controls="hlpm"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l.9-4.6A8 8 0 1 1 21 12z"/></svg><span>Допоможемо з вибором</span></button></div>
+<script>(()=>{const b=document.getElementById('hlpb'),m=document.getElementById('hlpm');b.onclick=()=>{m.hidden=!m.hidden;b.setAttribute('aria-expanded',!m.hidden)};document.addEventListener('click',e=>{if(!e.target.closest('#hlp'))m.hidden=true})})()</script>
 </body>
 </html>
