@@ -102,6 +102,16 @@ h2{font:400 clamp(30px,3.6vw,42px)/1.1 Lora,serif;margin:0 0 12px;text-wrap:bala
 .tiercta{margin:-16px 0 36px}.tiercta .reg{width:auto;padding:0 32px;margin:0}
 .or{font-size:13px;color:var(--mute)!important;margin:16px 0 8px!important}
 @media(max-width:600px){.tiercta .reg{width:100%}}
+.excl{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;margin-bottom:36px}
+.excl>div{border-radius:16px;padding:22px 24px}
+.excl>div:first-child{background:var(--band);color:var(--cream)}
+.excl>div.mgr{background:#fff;border:1px solid var(--line)}
+.excl .tl{font-size:13px;font-weight:600;color:#94723e}.excl>div:first-child .tl{color:var(--gold)}
+.excl b{display:block;font:400 clamp(30px,4vw,44px)/1.1 Lora,serif;margin:6px 0 8px}
+.excl>div:first-child b{color:var(--gold)}
+.excl p{margin:0;color:#5d574e}.excl>div:first-child p{color:#d9cfbf}
+.mgr a{color:#94723e;font-weight:600}
+@media(max-width:700px){.excl{grid-template-columns:minmax(0,1fr);gap:10px}}
 .cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 @media(max-width:700px){.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat{aspect-ratio:1}.cat:last-child{grid-column:1/-1;aspect-ratio:2/1}}
 .cat{position:relative;display:block;border-radius:16px;overflow:hidden;text-decoration:none;background:#ddd;aspect-ratio:4/3}
@@ -162,7 +172,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
   <h1>меблі, що стають акцентом</h1>
   <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
   <div class="cta"><a class="btn g" href="/catalog/">Відкрити каталог</a><a class="btn o" href="#contacts">Написати нам</a></div>
-  <div class="facts"><div><b>559</b>моделей у каталозі</div><div><b>15</b>категорій</div><div><b>UA · EU</b>доставка</div></div>
+  <div class="facts"><div><b>559</b>моделей у каталозі</div><div><b>10</b>категорій</div><div><b>UA · EU</b>доставка</div></div>
  </div>
  <div class="mosaic">
   <img src="/catalog/img/CT-01006.jpg" alt="Журнальний стіл">
@@ -229,7 +239,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
 
 <section class="dark" id="how"><div class="wrap">
  <h2>Як ми працюємо</h2>
- <p class="sub">Ціни в каталозі в доларах США, без доставки. Оплата в доларах, гривнях або криптовалюті — курс фіксуємо перед оплатою.</p>
+ <p class="sub">Ціни в каталозі в доларах США, без доставки. Оплата в доларах, гривнях або криптовалюті, зокрема безготівково на рахунок ФОП або ТОВ — курс фіксуємо перед оплатою.</p>
  <ol class="steps">
   <li><b>Вибір</b><span>Обираєте модель у каталозі або надсилаєте свій референс.</span></li>
   <li><b>Розрахунок</b><span>Уточнюємо розмір, колір, матеріали й рахуємо вартість з доставкою.</span></li>
@@ -241,10 +251,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
 
 <section id="designers"><div class="wrap">
  <h2>Дизайн-агенціям і дизайнерам</h2>
- <p class="sub">Заробляйте на кожному проєкті: 20% від клієнтської ціни з першого замовлення, <span style="white-space:nowrap">25–30%</span> — для агенцій із закупівлями від $50&nbsp;000.</p>
- <div class="tiers">
-  <div class="tier"><span class="tl">Стандарт</span><b>20%</b><p>З першого замовлення, без мінімальної суми.</p></div>
-  <div class="tier ex"><span class="tl">Ексклюзив</span><b>25–30%</b><p>Від $50&nbsp;000 оплачених замовлень за 12 місяців. Ставку фіксуємо індивідуально.</p></div>
+ <p class="sub">Для партнерів діють ексклюзивні умови співпраці. Зареєструйтеся — і ми надішлемо умови, партнерський прайс і каталог без цін для ваших клієнтів.</p>
+ <div class="excl">
+  <div><span class="tl">Партнерська програма</span><b>Ексклюзивні умови</b><p>Персональні ставки для агенцій і дизайнерів, вищі — для постійних партнерів з великим обсягом.</p></div>
+  <div class="mgr"><span class="tl">Ваш менеджер</span><b>Сергій</b><p><a href="tel:+380735058504">073 505 85 04</a> · <a href="https://t.me/+380735058504" target="_blank" rel="noopener">Telegram</a> · <a href="https://wa.me/380735058504" target="_blank" rel="noopener">WhatsApp</a> · <a href="viber://chat?number=%2B380735058504">Viber</a></p></div>
  </div>
  <div class="tiercta"><a class="btn g reg" href="https://forms.gle/casBmVxLs48Vn79K8" target="_blank" rel="noopener">Зареєструватися як агенція</a></div>
  <div class="partner">
@@ -252,7 +262,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
    <h3 class="h3">Дві моделі на вибір</h3>
    <ul class="plist">
     <li><b>Закупівля.</b> Купуєте за партнерською ціною і самі виставляєте рахунок клієнту за своєю ціною.</li>
-    <li><b>Комісія.</b> Клієнт платить нам клієнтську ціну, ви отримуєте відсоток після повної оплати. Ваші гроші не задіяні.</li>
+    <li><b>Комісія.</b> Клієнт платить нам напряму, ви отримуєте винагороду після повної оплати. Ваші гроші не задіяні.</li>
    </ul>
    <h3 class="h3">Що отримує партнер</h3>
    <ul class="plist">
@@ -267,13 +277,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
   <div class="pbox">
    <h3>Як стати партнером</h3>
    <a class="btn g reg" href="https://forms.gle/casBmVxLs48Vn79K8" target="_blank" rel="noopener">Зареєструватися як агенція</a>
-   <ol class="join"><li>Заповніть коротку анкету — 2 хвилини.</li><li>Отримайте партнерський прайс і каталог без цін.</li><li>Надішліть перший запит — артикули або специфікацію.</li></ol>
-   <p class="or">Або напишіть нам:</p>
+   <ol class="join"><li>Заповніть коротку анкету — 2 хвилини.</li><li>Отримайте умови співпраці, партнерський прайс і каталог без цін.</li><li>Надішліть перший запит — артикули або специфікацію.</li></ol>
+   <p class="or">Або напишіть менеджеру Сергію:</p>
    <div class="ct">
     <a href="https://t.me/+380735058504"><i style="background:#2AABEE"><svg viewBox="0 0 24 24"><path d="M2.5 11.3 20.6 4.3c.8-.3 1.6.4 1.3 1.3l-3 14.2c-.2.9-1.2 1.3-2 .7l-4.6-3.4-2.3 2.2c-.3.3-.8.1-.8-.3l.2-3.6 8.2-7.4-10.1 6.3-4.3-1.4c-.9-.3-.9-1.5-.7-1.6z"/></svg></i>Telegram</a>
     <a href="https://wa.me/380735058504"><i style="background:#2BB741"><svg viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg></i>WhatsApp</a>
    </div>
-   <p class="pnote">Ціни в доларах, без доставки. Передоплата 50%, оплата в $, гривнях або криптовалюті.</p>
+   <p class="pnote">Ціни в доларах, без доставки. Передоплата 50%. Оплата в $, гривнях, криптовалюті або безготівково на рахунок ФОП чи ТОВ.</p>
   </div>
  </div>
 </div></section>
@@ -289,7 +299,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
  <div class="faq">
   <details><summary>Чи входить доставка в ціну?</summary><p>Ні. Ціни в каталозі вказані без доставки — її вартість рахуємо окремо під кожне замовлення, в Україну або Європу.</p></details>
   <details><summary>Скільки чекати замовлення?</summary><p>Термін виготовлення залежить від фабрики й моделі — називаємо його в розрахунку. Доставка морем займає 2–3 місяці в дорозі.</p></details>
-  <details><summary>Як оплатити?</summary><p>Передоплата 50% запускає виготовлення, решту сплачуєте на етапі доставки. Оплата в доларах, гривнях або криптовалюті — курс фіксуємо перед кожною оплатою.</p></details>
+  <details><summary>Як оплатити?</summary><p>Передоплата 50% запускає виготовлення, решту сплачуєте на етапі доставки. Оплата в доларах, гривнях або криптовалюті. Приймаємо безготівкову оплату на рахунок ФОП або ТОВ. Курс фіксуємо перед кожною оплатою.</p></details>
   <details><summary>Як ви перевіряєте якість?</summary><p>Фабрика відвантажує меблі на наш склад у Гуанчжоу. Перед відправкою надсилаємо вам фото й відео саме вашого товару.</p></details>
   <details><summary>Чи можна змінити розмір або колір?</summary><p>Так. Виготовляємо під замовлення: змінимо розмір, колір чи оздоблення моделі або підберемо фабрику під ваш ескіз.</p></details>
   <details><summary>Чи можна замовити те, чого немає в каталозі?</summary><p>Так — світло, м'які меблі, меблі для терас, мангали та інше підбираємо під запит. Надішліть фото чи референс у месенджер.</p></details>

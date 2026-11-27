@@ -55,7 +55,8 @@ h2 small{font:500 14px Inter,sans-serif;color:var(--mute)}
 .c{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 14px;display:flow-root}
 .c img{float:left;width:132px;height:132px;object-fit:cover;display:block;background:var(--line);cursor:zoom-in;border-radius:8px;margin:0 14px 8px 0}
 .art{font-size:13px;font-weight:600;color:var(--gold2);letter-spacing:.02em}
-.nm{font-weight:600;font-size:15px;line-height:1.3;margin:2px 0 8px}
+.nm{font:500 19px/1.2 Lora,serif;margin:2px 0 2px}
+.ds{font-size:13px;color:var(--mute);line-height:1.35;margin:0 0 8px}
 .pr{font-size:14px}
 .r{display:flex;justify-content:space-between;gap:10px;padding:4px 0;border-bottom:1px solid var(--line)}
 .r:last-child{border-bottom:0}
@@ -116,6 +117,12 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
 .sh .ct{display:grid;gap:8px}.sh .ct a{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border:1px solid #3a352e;border-radius:12px;text-decoration:none;font-weight:600}
 .sh .ct i{width:12px;height:12px;border-radius:50%}
 .x{position:absolute;right:10px;top:8px;width:40px;height:40px;border:0;background:none;color:var(--cream);font-size:26px;cursor:pointer}
+.dl{display:block;background:none;border:0;padding:6px 0 0;color:var(--gold2);font:600 13px Inter,sans-serif;cursor:pointer;text-align:left}
+.dl:hover{text-decoration:underline}
+.shp{width:100%;border-collapse:collapse;font-size:14px}.shp th{text-align:left;font-size:12px;color:#a69e92;font-weight:600;padding:0 0 6px}
+.shp td{padding:8px 0;border-top:1px solid #3a352e;vertical-align:top}.shp td+td,.shp th+th{text-align:right;white-space:nowrap;padding-left:10px}
+.shp small{display:block;color:#a69e92;font-size:12px}
+.sh{max-height:88vh;overflow:auto}
 </style>
 </head>
 <body>
@@ -126,7 +133,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
    <h1 class="tag">меблі, що стають акцентом</h1>
    <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
    <p class="sub" id="cnt">Авторські меблі під замовлення</p>
-   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни без доставки в Україну. Ціни в доларах США. Оплата приймається в доларах, гривнях або криптовалюті — курс фіксуємо перед оплатою.</p>
+   <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни без доставки в Україну. Ціни в доларах США. Оплата в доларах, гривнях або криптовалюті, безготівково — на рахунок ФОП або ТОВ. Курс фіксуємо перед оплатою.</p>
    <p class="ask">За додатковими питаннями по моделях або за додатковими фото пишіть в особисті повідомлення.</p>
    <div class="ct">
     <a href="tel:+380735058504"><i style="background:#C9A063"><svg viewBox="0 0 24 24"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg></i><b>073 505 85 04</b></a>
@@ -191,8 +198,9 @@ function card(d){
   const det=(d.o.length?`<div class="lb">Варіанти</div><ul class="op">${ops}</ul>${moreO}`:'')+(d.m.length?`<div class="lb">Матеріали</div><p class="mt">${esc(d.m.join(', '))}</p>`:'');
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
-  <div class="art">${esc(d.a)}</div><div class="nm">${esc(d.n)}</div>
+  <div class="art">${esc(d.a)}</div><div class="nm">${esc(d.n)}</div>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}
   <div class="pr">${rows}</div>${moreP}
+  <button class="dl">Ціна з доставкою до Львова →</button>
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
 const minp=d=>Math.min(...d.p.map(r=>r[1]));
@@ -200,7 +208,7 @@ function filtered(){
   const f=q.value.trim().toLowerCase();
   return DATA.filter(d=>{
     if(VIEW&&!VIEW.set.has(d.a))return false;
-    if(f&&!(d.a+' '+d.n+' '+d.c+' '+d.m.join(' ')).toLowerCase().includes(f))return false;
+    if(f&&!(d.a+' '+d.n+' '+(d.d||'')+' '+d.c+' '+d.m.join(' ')).toLowerCase().includes(f))return false;
     if(F.s.size&&!d.s.some(x=>F.s.has(x)))return false;
     if(F.mt.size&&!d.mt.some(x=>F.mt.has(x)))return false;
     if(F.pr!=null){const p=minp(d),r=PR.at(F.pr);if(p<r[1]||p>=r[2])return false}
@@ -248,11 +256,39 @@ main.addEventListener('click',e=>{
     return}
   const fv=e.target.closest('.fav');
   if(fv){FAV.has(d.a)?FAV.delete(d.a):FAV.add(d.a);const on=FAV.has(d.a);fv.classList.toggle('on',on);fv.setAttribute('aria-pressed',on);fv.setAttribute('aria-label',on?'Прибрати з обраного':'Додати в обране');saveFav();if(VIEW&&VIEW.kind==='fav'&&!on){VIEW.set=new Set(FAV);render()}return}
+  if(e.target.closest('.dl')){shipSheet(d);return}
   if(e.target.closest('.askb')){const link=SITE+'?m='+encodeURIComponent(d.a);const txt=`Добрий день! Цікавить модель ${d.a} — ${d.n}. ${link}`;
     openSheet('Запитати про модель',`${d.a} · ${d.n}`,[['WhatsApp','#2BB741','https://wa.me/'+PHONE+'?text='+encodeURIComponent(txt)],['Telegram','#2AABEE','https://t.me/+'+PHONE],['Viber','#7360F2','viber://chat?number=%2B'+PHONE]],txt,'Текст запиту скопійовано — вставте його в чат. Телефон: 073 505 85 04');return}
   const im=e.target.closest('.c img');
   if(im){const l=$('lbx');l.querySelector('img').src=im.src;l.classList.add('show')}
 });
+
+const SHIP={lo:300,hi:450,pad:10};
+const DEF={'Консолі':[120,35,80],'Журнальні столи':[100,60,45],'Буфети':[160,45,85],'Комоди':[100,45,100],'ТВ-тумби':[180,40,50],'Обідні столи':[160,90,76],'Приставні столики':[50,50,55],'Туалетні столики':[100,45,140],'Шафи й вітрини':[100,45,200],'Інше':[100,50,80]};
+function dims(label,cat){
+  const df=DEF[cat]||[100,50,80];
+  const n=(label.match(/\d+(?:[.,]\d+)?/g)||[]).map(x=>parseFloat(x.replace(',','.'))).filter(x=>x>=15&&x<=400);
+  const dm=/Ø/.test(label);
+  let d;
+  if(dm&&n.length)d=[n[0],n[0],n[1]||df[2]];
+  else if(n.length>=3)d=n.slice(0,3);
+  else if(n.length===2)d=[n[0],n[1],df[2]];
+  else if(n.length===1)d=[n[0],Math.min(df[1],n[0]),df[2]];
+  else d=df;
+  return d;
+}
+function ship(d){
+  return d.p.map(r=>{const x=dims(r[0],d.c);const v=(x[0]+SHIP.pad)*(x[1]+SHIP.pad)*(x[2]+SHIP.pad)/1e6;
+    return {lab:r[0],x,v,lo:v*SHIP.lo,hi:v*SHIP.hi,a:r[1],b:r[2]}});
+}
+function shipSheet(d){
+  const rows=ship(d).map(s=>`<tr><td>${esc(s.lab)}<small>${(s.lab.match(/\d+/g)||[]).length>=3?'':'≈ '+s.x.map(Math.round).join('×')+' см · '}${s.v.toFixed(2).replace('.',',')} м³ в упаковці</small></td><td>${price(Math.round(s.lo),Math.round(s.hi))}</td><td><b>${price(Math.round(s.a+s.lo),Math.round(s.b+s.hi))}</b></td></tr>`).join('');
+  $('shT').textContent='Орієнтовна ціна у Львові';$('shm').textContent=`${d.a} · ${d.n}`;
+  $('shct').innerHTML=`<table class="shp"><thead><tr><th>Розмір</th><th>Доставка</th><th>Разом</th></tr></thead><tbody>${rows}</tbody></table>`;
+  $('shct').onclick=null;
+  $('shn').innerHTML=`Морем «під ключ» до Львова: $${SHIP.lo}–${SHIP.hi} за м³ — фрахт, розмитнення й податки за тарифами перевізників. Об'єм — за габаритами з запасом на упаковку й дерев'яну обрешітку. Розрахунок орієнтовний: точну суму назве менеджер. Доставка 2–3 місяці.`;
+  $('sheet').hidden=false;
+}
 function openSheet(title,sub,links,copy,note){
   $('shT').textContent=title;$('shm').textContent=sub;
   $('shct').innerHTML=links.map(([n,c,u])=>`<a href="${esc(u)}" target="_blank" rel="noopener"><i style="background:${c}"></i>${esc(n)}</a>`).join('');
