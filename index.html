@@ -78,6 +78,13 @@ h2{font:400 clamp(30px,3.6vw,42px)/1.1 Lora,serif;margin:0 0 12px;text-wrap:bala
 .pnote{font-size:13px;color:var(--mute)!important;margin:16px 0 0!important}
 #designers .partner{align-items:start}
 @media(max-width:600px){.tiers{grid-template-columns:minmax(0,1fr);gap:10px}}
+.faq{display:grid;gap:10px;max-width:860px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:0 20px}
+.faq summary{cursor:pointer;list-style:none;font:500 18px/1.3 Lora,serif;padding:18px 28px 18px 0;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;top:14px;font:400 26px Inter,sans-serif;color:var(--gold)}
+.faq details[open] summary::after{content:"–"}
+.faq p{margin:0 0 18px;color:#5d574e}
 .cats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 @media(max-width:700px){.cats{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.cat{aspect-ratio:1}.cat:last-child{grid-column:1/-1;aspect-ratio:2/1}}
 .cat{position:relative;display:block;border-radius:16px;overflow:hidden;text-decoration:none;background:#ddd;aspect-ratio:4/3}
@@ -128,7 +135,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
 <body>
 <nav><div class="wrap">
  <a class="brand" href="#top"><img src="/assets/logo.jpg" alt="">ACCENTER</a>
- <div class="menu"><a href="#directions">Напрямки</a><a href="/catalog/">Каталог</a><a href="#how">Як ми працюємо</a><a href="#designers">Агенціям</a><a href="#contacts">Контакти</a></div>
+ <div class="menu"><a href="#directions">Напрямки</a><a href="/catalog/">Каталог</a><a href="#how">Як ми працюємо</a><a href="#designers">Агенціям</a><a href="#faq">Питання</a><a href="#contacts">Контакти</a></div>
  <a class="btn g" href="/catalog/">Каталог</a>
 </div></nav>
 
@@ -233,6 +240,19 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:10px 24px;justify-content:space-bet
    </div>
    <p class="pnote">Ціни в доларах, без доставки. Передоплата 50%, оплата в $, гривнях або криптовалюті.</p>
   </div>
+ </div>
+</div></section>
+
+<section id="faq"><div class="wrap">
+ <h2>Часті питання</h2>
+ <div class="faq">
+  <details><summary>Чи входить доставка в ціну?</summary><p>Ні. Ціни в каталозі вказані без доставки — її вартість рахуємо окремо під кожне замовлення, в Україну або Європу.</p></details>
+  <details><summary>Скільки чекати замовлення?</summary><p>Термін виготовлення залежить від фабрики й моделі — називаємо його в розрахунку. Доставка морем займає 2–3 місяці в дорозі.</p></details>
+  <details><summary>Як оплатити?</summary><p>Передоплата 50% запускає виготовлення, решту сплачуєте на етапі доставки. Оплата в доларах, гривнях або криптовалюті — курс фіксуємо перед кожною оплатою.</p></details>
+  <details><summary>Як ви перевіряєте якість?</summary><p>Фабрика відвантажує меблі на наш склад у Гуанчжоу. Перед відправкою надсилаємо вам фото й відео саме вашого товару.</p></details>
+  <details><summary>Чи можна змінити розмір або колір?</summary><p>Так. Виготовляємо під замовлення: змінимо розмір, колір чи оздоблення моделі або підберемо фабрику під ваш ескіз.</p></details>
+  <details><summary>Чи можна замовити те, чого немає в каталозі?</summary><p>Так — світло, м'які меблі, меблі для терас, мангали та інше підбираємо під запит. Надішліть фото чи референс у месенджер.</p></details>
+  <details><summary>Чи показані ціни остаточні?</summary><p>Ціни в доларах актуальні на дату оновлення каталогу. Ціни в гривнях і євро — орієнтовні, за курсом НБУ. Точну суму фіксуємо в рахунку.</p></details>
  </div>
 </div></section>
 
