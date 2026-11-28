@@ -118,6 +118,11 @@ def main():
             out = {'type': 'designers', 'key': 'designers', 'cat': '', 'link': f'{SITE}/designers/',
                    'photo': random.choice(insp)}
     out['n'] = N
+    # UTM-мітка, щоб Google Analytics бачила переходи з Telegram
+    utm = f"utm_source=telegram&utm_medium=social&utm_campaign={out['type']}"
+    for k in ('link',):
+        if out.get(k) and 'utm_source=' not in out[k]:
+            out[k] += ('&' if '?' in out[k] else '?') + utm
     print(json.dumps(out, ensure_ascii=False, indent=1))
 
 if __name__ == '__main__':
