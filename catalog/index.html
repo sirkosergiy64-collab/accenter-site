@@ -159,6 +159,7 @@ footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;pad
    <p class="lead">Доставка ексклюзивних меблів в Україну та Європу з кращих фабрик Китаю, а також виготовлення під ваш запит.</p>
    <p class="sub" id="cnt">Авторські меблі під замовлення</p>
    <p class="cond">Виготовлення під замовлення, передоплата 50%. Ціни під ключ: доставка з Китаю до Львова, розмитнення й усі інші витрати вже включені; доставку по Україні сплачуєте за тарифом перевізника (Нова пошта або інший). Ціни в доларах США. Оплата в доларах, гривнях або криптовалюті, безготівково — на рахунок ФОП або ТОВ. Курс фіксуємо перед оплатою.</p>
+   <a class="nwl" href="?nw" style="text-decoration:none;background:transparent;border:1px solid #C9A063;color:#C9A063">Новинки тижня →</a>
    <button class="nwl" id="nwl">Нова колекція: травертин, камінь і скло →</button>
    <p class="ask">За додатковими питаннями по моделях або за додатковими фото пишіть в особисті повідомлення.</p>
    <div class="ct">
@@ -233,7 +234,7 @@ function card(d){
   const det=(d.o.length?`<div class="lb">Варіанти</div><ul class="op">${ops}</ul>${moreO}`:'')+(d.m.length?`<div class="lb">Матеріали</div><p class="mt">${esc(d.m.join(', '))}</p>`:'');
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
-  <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}${d.g?'<span class="nwb rpb">📷 '+d.g+' фото</span>':''}${d.rp?'<a class="nwb rpb" href="/catalog/m/'+esc(d.a)+'/#real">📷 Реальні фото</a>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
+  <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}${d.nw?'<span class="nwb">Новинка</span>':''}${d.g?'<span class="nwb rpb">📷 '+d.g+' фото</span>':''}${d.rp?'<a class="nwb rpb" href="/catalog/m/'+esc(d.a)+'/#real">📷 Реальні фото</a>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
   <div class="pr">${rows}</div>${noP(d)?'':'<div class="dv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>Ціна з доставкою в Україну</div>'}${moreP}${(FABN[fab(d)]||0)>1&&!(VIEW&&VIEW.kind==='fab')?'<a class="fabl" href="?f='+fab(d)+'">Усі моделі цієї фабрики ('+FABN[fab(d)]+') →</a>':''}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
@@ -271,7 +272,7 @@ function banner(){
   const n=[...VIEW.set].filter(a=>DATA.some(d=>d.a===a)).length;
   b.innerHTML=VIEW.kind==='fav'
    ?`<div class="bn"><b>Обране · ${pl(n,'модель','моделі','моделей')}</b><span>${n?'<button class="tb g" id="share">Поділитися добіркою</button>':'Натискайте ♡ на картках, щоб зібрати добірку.'}<button class="tb" id="all">Весь каталог</button></span></div>`
-   :`<div class="bn"><b>${VIEW.kind==='one'?'Модель за посиланням':VIEW.kind==='new'?'Нова колекція · травертин, камінь, скло':VIEW.kind==='fab'?'Усі моделі однієї фабрики · '+pl(n,'модель','моделі','моделей'):'Добірка · '+pl(n,'модель','моделі','моделей')}</b><span>${VIEW.kind==='sel'?'<button class="tb" id="addall">Додати в обране</button>':''}<button class="tb g" id="all">Весь каталог</button></span></div>`;
+   :`<div class="bn"><b>${VIEW.kind==='one'?'Модель за посиланням':VIEW.kind==='new'?'Нова колекція · травертин, камінь, скло':VIEW.kind==='nw'?'Новинки тижня · '+pl(n,'модель','моделі','моделей'):VIEW.kind==='fab'?'Усі моделі однієї фабрики · '+pl(n,'модель','моделі','моделей'):'Добірка · '+pl(n,'модель','моделі','моделей')}</b><span>${VIEW.kind==='sel'?'<button class="tb" id="addall">Додати в обране</button>':''}<button class="tb g" id="all">Весь каталог</button></span></div>`;
 }
 $('nwl').onclick=()=>setView({kind:'new',set:new Set(DATA.filter(isNew).map(x=>x.a))});
 function saveFav(){ls.set('accFav',[...FAV]);$('favn').textContent=FAV.size;$('favbtn').classList.toggle('on',FAV.size>0)}
@@ -375,6 +376,7 @@ Promise.all([Promise.all([fetch('data.json').then(r=>r.json()),fetch('pending12.
   saveFav();chips();curUI();
   const sp=new URLSearchParams(location.search);
   for(const v of sp.getAll('s'))F.s.add(v);for(const v of sp.getAll('mt'))F.mt.add(v);for(const v of sp.getAll('r'))if(ROOMS[v])F.r.add(v);for(const v of sp.getAll('cl'))F.cl.add(v);if(F.s.size||F.mt.size||F.r.size||F.cl.size)chips();
+  if(sp.has('nw')){const L=DATA.reduce((m,x)=>x.nw&&x.nw>m?x.nw:m,'');VIEW={kind:'nw',set:new Set(DATA.filter(x=>x.nw&&x.nw===L).map(x=>x.a))}}
   if(sp.get('f'))VIEW={kind:'fab',set:new Set(DATA.filter(x=>fab(x)===sp.get('f')).map(x=>x.a))};
   if(sp.has('new'))VIEW={kind:'new',set:new Set(DATA.filter(isNew).map(x=>x.a))};
   if(sp.get('sel'))VIEW={kind:'sel',set:new Set(sp.get('sel').split(',').filter(Boolean))};
