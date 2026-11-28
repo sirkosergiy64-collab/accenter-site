@@ -44,6 +44,11 @@ CSS = STYLE + '''
 .pp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start;padding:28px 0 8px}
 @media(max-width:820px){.pp{grid-template-columns:minmax(0,1fr);gap:18px}}
 .ph img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:16px;display:block;background:var(--line)}
+.gal{position:relative}.gs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:8px;border-radius:16px;scrollbar-width:none}.gs::-webkit-scrollbar{display:none}
+.gs img{flex:0 0 100%;width:100%;height:auto;aspect-ratio:1;object-fit:cover;scroll-snap-align:center;border-radius:16px}
+.gn{position:absolute;right:12px;bottom:12px;background:rgba(20,18,15,.7);color:#fff;font:600 12px Inter,sans-serif;padding:4px 9px;border-radius:99px}
+.gt{display:flex;gap:6px;overflow-x:auto;margin-top:8px;scrollbar-width:none}.gt img{flex:0 0 62px;width:62px;height:62px;aspect-ratio:1;border-radius:8px;cursor:pointer;opacity:.65;border:2px solid transparent}.gt img.on{opacity:1;border-color:#C9A063}
+.gb{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:0;background:rgba(255,255,255,.85);font-size:20px;cursor:pointer}.gb.l{left:10px}.gb.r{right:10px}@media(max-width:820px){.gb{display:none}}
 .pi .art{font-size:13px}.pi h1{font:400 clamp(30px,4vw,44px)/1.1 Lora,serif;margin:4px 0 6px;color:var(--ink)}
 .pi .ds{color:#6f685e;margin:0 0 16px}
 table.t{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
@@ -76,6 +81,20 @@ def decor_block(d):
                     f'<div><h2><a href="/catalog/m/{esc(r["a"])}/" style="text-decoration:none">{esc(r["n"])}</a></h2>'
                     f'<p class="ds">{esc(r.get("d", ""))}</p><p><b>{price(None if NOP(r) else MINP(r), None if NOP(r) else MINP(r))}</b></p></div></article>' for r in pool)
     return f'<section class="more"><h2>Доповніть декором</h2><p style="color:#6b6357;margin:-4px 0 14px">Декор їде в тому ж контейнері, що й меблі, тож разом виходить вигідніше. <a href="/catalog/dekor/">Увесь декор →</a></p><div class="grid">{cards}</div></section>'
+
+GJS = '''<script>(()=>{const s=document.querySelector('.gs');if(!s)return;const t=[...document.querySelectorAll('.gt img')],n=document.querySelector('.gn'),N=s.children.length;
+const go=i=>s.scrollTo({left:s.clientWidth*i+8*i,behavior:'smooth'});const cur=()=>Math.round(s.scrollLeft/(s.clientWidth+8));
+s.addEventListener('scroll',()=>{const i=cur();n.textContent=(i+1)+' / '+N;t.forEach((x,j)=>x.classList.toggle('on',j===i))},{passive:true});
+t.forEach((x,j)=>x.onclick=()=>go(j));document.querySelector('.gb.l').onclick=()=>go(Math.max(0,cur()-1));document.querySelector('.gb.r').onclick=()=>go(Math.min(N-1,cur()+1));})()</script>'''
+
+def gallery(d):
+    a, n, k = d['a'], d['n'], d.get('g')
+    if not k:
+        return f'<img src="/catalog/img/{a}.jpg" alt="{esc(n)}" width="400" height="400">'
+    srcs = [f'/catalog/img/g/{a}/{i}.jpg' for i in range(1, k + 1)]
+    big = ''.join(f'<img src="{s}" alt="{esc(n)} — фото {i}" width="800" height="800"{"" if i == 1 else " loading=\"lazy\""}>' for i, s in enumerate(srcs, 1))
+    th = ''.join(f'<img src="{s}" alt="" loading="lazy"{" class=\"on\"" if i == 1 else ""}>' for i, s in enumerate(srcs, 1))
+    return f'<div class="gal"><div class="gs">{big}</div><span class="gn">1 / {k}</span><button class="gb l" aria-label="Попереднє фото">‹</button><button class="gb r" aria-label="Наступне фото">›</button></div><div class="gt">{th}</div>{GJS}'
 
 def real_block(d):
     k = d.get('rp')
@@ -128,7 +147,7 @@ def page(d, rel):
 <main class="wrap">
  <p class="crumbs" style="margin-top:16px">{crumbs}</p>
  <div class="pp">
-  <div class="ph"><img src="/catalog/img/{a}.jpg" alt="{esc(n)}" width="400" height="400"></div>
+  <div class="ph">{gallery(d)}</div>
   <div class="pi">
    <span class="art">{esc(a)}</span>
    <h1>{esc(n)}</h1>

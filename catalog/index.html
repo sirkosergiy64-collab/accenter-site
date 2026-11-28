@@ -84,7 +84,7 @@ h2 small{font:500 14px Inter,sans-serif;color:var(--mute)}
 .up{position:fixed;right:max(16px,env(safe-area-inset-right));bottom:20px;width:48px;height:48px;border-radius:50%;border:0;background:var(--gold);color:#1d1a16;font-size:22px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;opacity:0;pointer-events:none;transition:opacity .2s}
 .up.show{opacity:1;pointer-events:auto}
 .lbx{position:fixed;inset:0;background:rgba(10,9,8,.88);display:none;place-items:center;z-index:9;padding:20px}
-.lbx.show{display:grid}.lbx img{max-width:min(92vw,520px);width:100%;border-radius:10px}
+.lbx.show{display:grid}.lg{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:10px;width:min(92vw,620px)}.lg img{flex:0 0 100%;max-width:none!important;scroll-snap-align:center}.lgn{color:#EEE8DC;font:600 13px Inter,sans-serif;margin-top:10px;text-align:center}.lbx{flex-direction:column}.lbx img{max-width:min(92vw,520px);width:100%;border-radius:10px}
 footer{background:var(--band);color:#a69e92;font-size:13px;text-align:center;padding:24px 16px}
 @media(max-width:600px){
  .hero{grid-template-columns:96px minmax(0,1fr);gap:14px;padding:16px}
@@ -232,7 +232,7 @@ function card(d){
   const det=(d.o.length?`<div class="lb">Варіанти</div><ul class="op">${ops}</ul>${moreO}`:'')+(d.m.length?`<div class="lb">Матеріали</div><p class="mt">${esc(d.m.join(', '))}</p>`:'');
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
-  <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}${d.rp?'<a class="nwb rpb" href="/catalog/m/'+esc(d.a)+'/#real">📷 Реальні фото</a>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
+  <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}${d.g?'<span class="nwb rpb">📷 '+d.g+' фото</span>':''}${d.rp?'<a class="nwb rpb" href="/catalog/m/'+esc(d.a)+'/#real">📷 Реальні фото</a>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
   <div class="pr">${rows}</div>${noP(d)?'':'<div class="dv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>Ціна з доставкою в Україну</div>'}${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
@@ -295,7 +295,7 @@ main.addEventListener('click',e=>{
   if(e.target.closest('.askb')){const link=SITE+'?m='+encodeURIComponent(d.a);const txt=`Добрий день! Цікавить модель ${d.a} — ${d.n}. ${link}`;
     openSheet('Запитати про модель',`${d.a} · ${d.n}`,[['WhatsApp','#2BB741','https://wa.me/'+PHONE+'?text='+encodeURIComponent(txt)],['Telegram','#2AABEE','https://t.me/+'+PHONE],['Viber','#7360F2','viber://chat?number=%2B'+PHONE]],txt,'Текст запиту скопійовано — вставте його в чат. Телефон: 073 505 85 04');return}
   const im=e.target.closest('.c img');
-  if(im){const l=$('lbx');l.querySelector('img').src=im.src;l.classList.add('show')}
+  if(im){const l=$('lbx');if(d.g){l.innerHTML='<div class="lg">'+Array.from({length:d.g},(_,i)=>'<img src="img/g/'+encodeURIComponent(d.a)+'/'+(i+1)+'.jpg" alt="" loading="lazy">').join('')+'</div><span class="lgn">'+d.g+' фото · гортайте →</span>'}else{l.innerHTML='<img alt="" src="'+im.src+'">'}l.classList.add('show')}
 });
 
 const SHIP={lo:300,hi:450,pad:10};
@@ -334,7 +334,7 @@ function openSheet(title,sub,links,copy,note){
 $('shx').onclick=()=>$('sheet').hidden=true;
 $('sheet').addEventListener('click',e=>{if(e.target.id==='sheet')$('sheet').hidden=true});
 addEventListener('keydown',e=>{if(e.key==='Escape'){$('sheet').hidden=true;$('lbx').classList.remove('show')}});
-$('lbx').addEventListener('click',e=>e.currentTarget.classList.remove('show'));
+$('lbx').addEventListener('click',e=>{if(!e.target.closest('.lg'))e.currentTarget.classList.remove('show')});
 $('favbtn').onclick=()=>VIEW&&VIEW.kind==='fav'?setView(null):setView({kind:'fav',set:new Set(FAV)});
 $('fbtn').onclick=()=>{const p=$('fp');p.hidden=!p.hidden;$('fbtn').setAttribute('aria-expanded',!p.hidden)};
 $('fdone').onclick=()=>{$('fp').hidden=true;$('fbtn').setAttribute('aria-expanded','false');scrollTo({top:main.offsetTop-document.querySelector('.bar').offsetHeight,behavior:'instant'})};
