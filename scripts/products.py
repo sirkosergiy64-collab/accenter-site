@@ -96,6 +96,16 @@ def gallery(d):
     th = ''.join(f'<img src="{s}" alt="" loading="lazy"{" class=\"on\"" if i == 1 else ""}>' for i, s in enumerate(srcs, 1))
     return f'<div class="gal"><div class="gs">{big}</div><span class="gn">1 / {k}</span><button class="gb l" aria-label="Попереднє фото">‹</button><button class="gb r" aria-label="Наступне фото">›</button></div><div class="gt">{th}</div>{GJS}'
 
+FABC = None
+def fab_block(d):
+    global FABC
+    if FABC is None:
+        FABC = {}
+        for x in json.load(open('catalog/data.json', encoding='utf-8')): FABC[x['a'][3:5]] = FABC.get(x['a'][3:5], 0) + 1
+    n = FABC.get(d['a'][3:5], 0)
+    if n < 2: return ''
+    return f'<p style="margin:22px 0 0"><a href="/catalog/?f={d["a"][3:5]}" style="display:inline-block;padding:12px 18px;border-radius:14px;background:#efe4cf;color:#7a5c25;font:600 15px Inter,sans-serif;text-decoration:none">Усі моделі цієї фабрики ({n}) →</a></p>'
+
 def real_block(d):
     k = d.get('rp')
     if not k: return ''
@@ -160,6 +170,7 @@ def page(d, rel):
    <ul class="trust"><li>Виготовлення під замовлення: розмір, колір, оздоблення</li><li>Фото й відео саме вашого товару зі складу в Гуанчжоу перед відправкою</li><li>Передоплата 50%, решта — на етапі доставки</li><li>Оплата в $, ₴, криптовалюті або на рахунок ФОП / ТОВ</li></ul>
   </div>
  </div>
+ {fab_block(d)}
  {real_block(d)}
  {decor_block(d)}
  {f'<section class="more"><h2>Схожі моделі</h2><div class="grid">{relh}</div></section>' if rel else ''}

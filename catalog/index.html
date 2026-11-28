@@ -49,7 +49,7 @@ h1.tag{font:400 clamp(27px,4.6vw,48px)/1.12 Lora,serif;letter-spacing:.02em;colo
 .ct i{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none}
 .ct svg{width:15px;height:15px;fill:#fff}
 .chan{display:inline-block;margin-top:12px;color:var(--gold);font-size:14px}
-.nwl{display:block;width:100%;max-width:420px;text-align:left;margin:4px 0 12px;padding:12px 18px;border-radius:14px;background:var(--gold2,#9a7a3e);color:#fff;font:600 14px Inter,sans-serif;text-decoration:none;cursor:pointer;border:0}
+.fabl{display:inline-block;margin-top:8px;color:var(--gold2,#94723e);font:600 13px Inter,sans-serif;text-decoration:none}.nwl{display:block;width:100%;max-width:420px;text-align:left;margin:4px 0 12px;padding:12px 18px;border-radius:14px;background:var(--gold2,#9a7a3e);color:#fff;font:600 14px Inter,sans-serif;text-decoration:none;cursor:pointer;border:0}
 .rpb{background:#e8efe4;color:#3f5a2e;text-decoration:none}.nwb{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#efe4cf;color:#7a5c25;font:600 11px Inter,sans-serif;vertical-align:2px}
 .bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--band) 96%,transparent);backdrop-filter:blur(6px);border-top:1px solid #2e2a24}
 .barin{max-width:1240px;margin:auto;padding:8px max(4vw,16px);display:flex;gap:10px;align-items:center}
@@ -223,6 +223,7 @@ const COLORS=[['Білий',/біл|молочн|снігов/],['Кремови
 const colorsOf=d=>d._cl||(d._cl=(t=>COLORS.filter(([,re])=>re.test(t)).map(([n])=>n))([...(d.o||[]),d.n,d.d||'',...(d.m||[])].join(' ').toLowerCase()));
 const PR=[['до $500',0,500],['$500–1 000',500,1000],['$1 000–2 000',1000,2000],['від $2 000',2000,1e9]];
 const heart='<svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>';
+const fab=d=>d.a.slice(3,5);let FABN={};
 const isNew=d=>/-12\d{3}$/.test(d.a);
 function card(d){
   const row=r=>`<div class="r"><span>${esc(r[0])}</span>${r[1]==null?'':`<b>${price(r[1],r[2])}</b>`}</div>`;const rows=d.p.slice(0,6).map(row).join('');
@@ -233,7 +234,7 @@ function card(d){
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
   <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}${d.g?'<span class="nwb rpb">📷 '+d.g+' фото</span>':''}${d.rp?'<a class="nwb rpb" href="/catalog/m/'+esc(d.a)+'/#real">📷 Реальні фото</a>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
-  <div class="pr">${rows}</div>${noP(d)?'':'<div class="dv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>Ціна з доставкою в Україну</div>'}${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
+  <div class="pr">${rows}</div>${noP(d)?'':'<div class="dv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>Ціна з доставкою в Україну</div>'}${moreP}${(FABN[fab(d)]||0)>1&&!(VIEW&&VIEW.kind==='fab')?'<a class="fabl" href="?f='+fab(d)+'">Усі моделі цієї фабрики ('+FABN[fab(d)]+') →</a>':''}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
 const minp=d=>noP(d)?Infinity:Math.min(...d.p.filter(r=>r[1]!=null).map(r=>r[1]));
@@ -270,7 +271,7 @@ function banner(){
   const n=[...VIEW.set].filter(a=>DATA.some(d=>d.a===a)).length;
   b.innerHTML=VIEW.kind==='fav'
    ?`<div class="bn"><b>Обране · ${pl(n,'модель','моделі','моделей')}</b><span>${n?'<button class="tb g" id="share">Поділитися добіркою</button>':'Натискайте ♡ на картках, щоб зібрати добірку.'}<button class="tb" id="all">Весь каталог</button></span></div>`
-   :`<div class="bn"><b>${VIEW.kind==='one'?'Модель за посиланням':VIEW.kind==='new'?'Нова колекція · травертин, камінь, скло':'Добірка · '+pl(n,'модель','моделі','моделей')}</b><span>${VIEW.kind==='sel'?'<button class="tb" id="addall">Додати в обране</button>':''}<button class="tb g" id="all">Весь каталог</button></span></div>`;
+   :`<div class="bn"><b>${VIEW.kind==='one'?'Модель за посиланням':VIEW.kind==='new'?'Нова колекція · травертин, камінь, скло':VIEW.kind==='fab'?'Усі моделі однієї фабрики · '+pl(n,'модель','моделі','моделей'):'Добірка · '+pl(n,'модель','моделі','моделей')}</b><span>${VIEW.kind==='sel'?'<button class="tb" id="addall">Додати в обране</button>':''}<button class="tb g" id="all">Весь каталог</button></span></div>`;
 }
 $('nwl').onclick=()=>setView({kind:'new',set:new Set(DATA.filter(isNew).map(x=>x.a))});
 function saveFav(){ls.set('accFav',[...FAV]);$('favn').textContent=FAV.size;$('favbtn').classList.toggle('on',FAV.size>0)}
@@ -367,13 +368,14 @@ const up=$('up');
 addEventListener('scroll',()=>up.classList.toggle('show',scrollY>600),{passive:true});
 up.addEventListener('click',()=>scrollTo({top:0}));
 Promise.all([Promise.all([fetch('data.json').then(r=>r.json()),fetch('pending12.json').then(r=>r.ok?r.json():[]).catch(()=>[])]).then(([a,b])=>a.concat(b)),fetch('rates.json').then(r=>r.json()).catch(()=>null)]).then(([d,r])=>{
-  CATS=[...new Set(d.map(x=>x.c))];DATA=d.slice().sort((x,y)=>isNew(y)-isNew(x));
+  FABN={};d.forEach(x=>{FABN[fab(x)]=(FABN[fab(x)]||0)+1});CATS=[...new Set(d.map(x=>x.c))];DATA=d.slice().sort((x,y)=>isNew(y)-isNew(x));
   if(r){R=r}else if(CUR!=='USD'){CUR='USD'}
   $('cnt').textContent=`Ціни оновлено ${R.date||'27.11.2026'}`;
   tabs.innerHTML=CATS.map((c,i)=>`<a href="#cat-${i}">${esc(c)}</a>`).join('');
   saveFav();chips();curUI();
   const sp=new URLSearchParams(location.search);
   for(const v of sp.getAll('s'))F.s.add(v);for(const v of sp.getAll('mt'))F.mt.add(v);for(const v of sp.getAll('r'))if(ROOMS[v])F.r.add(v);for(const v of sp.getAll('cl'))F.cl.add(v);if(F.s.size||F.mt.size||F.r.size||F.cl.size)chips();
+  if(sp.get('f'))VIEW={kind:'fab',set:new Set(DATA.filter(x=>fab(x)===sp.get('f')).map(x=>x.a))};
   if(sp.has('new'))VIEW={kind:'new',set:new Set(DATA.filter(isNew).map(x=>x.a))};
   if(sp.get('sel'))VIEW={kind:'sel',set:new Set(sp.get('sel').split(',').filter(Boolean))};
   else if(sp.get('m'))VIEW={kind:'one',set:new Set([sp.get('m')])};
