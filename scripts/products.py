@@ -62,6 +62,21 @@ table.t{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
 .trust li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 '''
 
+DECOR = None
+def decor_block(d):
+    global DECOR
+    if d['c'] == 'Декор': return ''
+    if DECOR is None:
+        DECOR = [x for x in json.load(open('catalog/data.json', encoding='utf-8')) if x['c'] == 'Декор']
+        DECOR.sort(key=lambda x: NOP(x))
+    if not DECOR: return ''
+    sty = set(d.get('s', []))
+    pool = sorted(DECOR, key=lambda x: (NOP(x), -len(sty & set(x.get('s', []))), (hash(d['a'] + x['a']) % 97)))[:4]
+    cards = ''.join(f'<article class="c"><a href="/catalog/m/{esc(r["a"])}/"><img src="/catalog/img/{esc(r["a"])}.jpg" alt="{esc(r["n"])}" loading="lazy" width="400" height="400"></a>'
+                    f'<div><h2><a href="/catalog/m/{esc(r["a"])}/" style="text-decoration:none">{esc(r["n"])}</a></h2>'
+                    f'<p class="ds">{esc(r.get("d", ""))}</p><p><b>{price(None if NOP(r) else MINP(r), None if NOP(r) else MINP(r))}</b></p></div></article>' for r in pool)
+    return f'<section class="more"><h2>Доповніть декором</h2><p style="color:#6b6357;margin:-4px 0 14px">Декор їде в тому ж контейнері, що й меблі, тож разом виходить вигідніше. <a href="/catalog/dekor/">Увесь декор →</a></p><div class="grid">{cards}</div></section>'
+
 def real_block(d):
     k = d.get('rp')
     if not k: return ''
@@ -127,6 +142,7 @@ def page(d, rel):
   </div>
  </div>
  {real_block(d)}
+ {decor_block(d)}
  {f'<section class="more"><h2>Схожі моделі</h2><div class="grid">{relh}</div></section>' if rel else ''}
 </main>
 <footer><div class="wrap"><span>Accenter · дизайнерські та авторські меблі · 073 505 85 04</span>
