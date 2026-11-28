@@ -21,5 +21,10 @@ for f in sorted(glob.glob(f'{R}/catalog/extra/*.json')):
         if x['a'] in idx: D[idx[x['a']]] = x
         else: idx[x['a']] = len(D); D.append(x)
         n += 1
+import sys; sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from apply_fix import apply as _fix
+_fix(D)
+for x in D:
+    x['p'] = [[r[0], nice(r[1]), nice(r[2])] for r in x['p']]
 json.dump(D, open(f'{R}/catalog/data.json', 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
 print('merged', n, 'total', len(D))

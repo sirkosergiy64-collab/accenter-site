@@ -68,19 +68,58 @@ table.t{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
 '''
 
 DECOR = None
+# Декор рекомендуємо тільки там, де він пасує за стилем, кольором і матеріалами меблів
+DEC_TAGS = {'wood': ('дерев',), 'gold': ('золот', 'латун', 'бронз'), 'white': ('біл',), 'stone': ('камінь',)}
+FUR_TAGS = {'wood': ('горіх', 'дерев', 'коричнев', 'натурал', 'тик', 'дуб'),
+            'white': ('біл', 'кремов', 'бежев', 'світл', 'молочн'),
+            'black': ('чорн', 'графіт'),
+            'gold': ('золот', 'латун', 'бронз'),
+            'stone': ('травертин', 'мармур', 'камін', 'керамограніт')}
+# які «тони» декору пасують до тону меблів
+AFF = {'wood': {'wood': 3, 'gold': 2}, 'white': {'white': 3, 'gold': 1, 'stone': 1},
+       'black': {'gold': 3, 'wood': 1}, 'gold': {'gold': 3, 'white': 1}, 'stone': {'stone': 3, 'white': 2, 'wood': 1}}
+# стилі меблів, до яких пасує наш декор (зараз увесь декор — ретро/вінтаж), і які тони декору там доречні
+STY_OK = {'Ретро і вінтаж': None, 'Французький стиль': None,
+          'Ваби-сабі': {'wood', 'white', 'stone'}, 'Кремовий стиль': {'white', 'stone', 'wood'},
+          'Новий китайський': {'wood', 'stone'}}
+
+def _tags(text, table):
+    t = text.lower()
+    return {k for k, ws in table.items() if any(w in t for w in ws)}
+
+def _ftext(x):
+    return ' '.join([x.get('n', ''), x.get('d', '')] + x.get('mt', []) + x.get('m', []) + x.get('o', []))
+
+def decor_pick(d, decor):
+    hit = [st for st in d.get('s', []) if st in STY_OK]
+    if not hit: return []
+    allowed = None if any(STY_OK[st] is None for st in hit) else set().union(*(STY_OK[st] for st in hit))
+    ftone = _tags(_ftext(d), FUR_TAGS)
+    dstyle = set(d.get('s', []))
+    scored = []
+    for x in decor:
+        dt = _tags(x.get('d', '') + ' ' + ' '.join(x.get('mt', [])), DEC_TAGS)
+        if allowed is not None and not (dt & allowed): continue
+        sc = sum(AFF.get(f, {}).get(t, 0) for f in ftone for t in dt)
+        sc += 2 * len(dstyle & set(x.get('s', [])))
+        if set(m.lower() for m in d.get('m', [])) & set(m.lower() for m in x.get('m', [])): sc += 1
+        if ftone and sc < 3: continue
+        scored.append((-sc, NOP(x), hash(d['a'] + x['a']) % 97, x))
+    scored.sort(key=lambda t: t[:3])
+    return [t[3] for t in scored[:4]]
+
 def decor_block(d):
     global DECOR
     if d['c'] == 'Декор': return ''
     if DECOR is None:
         DECOR = [x for x in json.load(open('catalog/data.json', encoding='utf-8')) if x['c'] == 'Декор']
-        DECOR.sort(key=lambda x: NOP(x))
     if not DECOR: return ''
-    sty = set(d.get('s', []))
-    pool = sorted(DECOR, key=lambda x: (NOP(x), -len(sty & set(x.get('s', []))), (hash(d['a'] + x['a']) % 97)))[:4]
+    pool = decor_pick(d, DECOR)
+    if len(pool) < 2: return ''
     cards = ''.join(f'<article class="c"><a href="/catalog/m/{esc(r["a"])}/"><img src="/catalog/img/{esc(r["a"])}.jpg" alt="{esc(r["n"])}" loading="lazy" width="400" height="400"></a>'
                     f'<div><h2><a href="/catalog/m/{esc(r["a"])}/" style="text-decoration:none">{esc(r["n"])}</a></h2>'
                     f'<p class="ds">{esc(r.get("d", ""))}</p><p><b>{price(None if NOP(r) else MINP(r), None if NOP(r) else MINP(r))}</b></p></div></article>' for r in pool)
-    return f'<section class="more"><h2>Доповніть декором</h2><p style="color:#6b6357;margin:-4px 0 14px">Декор їде в тому ж контейнері, що й меблі, тож разом виходить вигідніше. <a href="/catalog/dekor/">Увесь декор →</a></p><div class="grid">{cards}</div></section>'
+    return f'<section class="more"><h2>Декор у тон до цієї моделі</h2><p style="color:#6b6357;margin:-4px 0 14px">Підібрали за стилем, кольором і матеріалами. Декор їде в тому ж контейнері, що й меблі. <a href="/catalog/dekor/">Увесь декор →</a></p><div class="grid">{cards}</div></section>'
 
 GJS = '''<script>(()=>{const s=document.querySelector('.gs');if(!s)return;const t=[...document.querySelectorAll('.gt img')],n=document.querySelector('.gn'),N=s.children.length;
 const go=i=>s.scrollTo({left:s.clientWidth*i+8*i,behavior:'smooth'});const cur=()=>Math.round(s.scrollLeft/(s.clientWidth+8));
