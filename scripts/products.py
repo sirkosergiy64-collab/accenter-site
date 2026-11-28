@@ -52,6 +52,7 @@ table.t{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
 .t small{display:block;color:#8a8278;font-size:12px}
 .tot{font-weight:700}
 .sn{font-size:12.5px;color:#8a8278;margin:6px 0 18px}
+.real{margin:34px 0 0}.real h2{font:400 26px Lora,serif;margin:0 0 6px}.real p{color:#6b6357;margin:0 0 14px;font-size:14px}.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}.rg img{width:100%;height:260px;object-fit:cover;border-radius:12px;display:block}
 .kv{margin:0 0 14px}.kv b{display:block;font-size:12px;color:#94723e;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .kv ul{margin:0;padding-left:18px;color:#4a453e;font-size:14.5px}
 .cta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 6px}
@@ -60,6 +61,12 @@ table.t{width:100%;border-collapse:collapse;font-size:15px;margin:0 0 6px}
 .trust{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0 0;padding:0;list-style:none;font-size:13.5px;color:#4a453e}
 .trust li{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 '''
+
+def real_block(d):
+    k = d.get('rp')
+    if not k: return ''
+    imgs = ''.join(f'<a href="/assets/real/{d["a"]}/{i}.jpg" target="_blank"><img src="/assets/real/{d["a"]}/{i}.jpg" alt="Реальне фото {esc(d["n"])} від покупця" loading="lazy"></a>' for i in range(1, k + 1))
+    return f'<section class="real" id="real"><h2>Реальні фото</h2><p>Фото цієї моделі, які зробили покупці у себе вдома. Не рендер і не студійна зйомка.</p><div class="rg">{imgs}</div></section>'
 
 def page(d, rel):
     a, n, cat = d['a'], d['n'], d['c']
@@ -119,6 +126,7 @@ def page(d, rel):
    <ul class="trust"><li>Виготовлення під замовлення: розмір, колір, оздоблення</li><li>Фото й відео саме вашого товару зі складу в Гуанчжоу перед відправкою</li><li>Передоплата 50%, решта — на етапі доставки</li><li>Оплата в $, ₴, криптовалюті або на рахунок ФОП / ТОВ</li></ul>
   </div>
  </div>
+ {real_block(d)}
  {f'<section class="more"><h2>Схожі моделі</h2><div class="grid">{relh}</div></section>' if rel else ''}
 </main>
 <footer><div class="wrap"><span>Accenter · дизайнерські та авторські меблі · 073 505 85 04</span>

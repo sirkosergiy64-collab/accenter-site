@@ -50,7 +50,7 @@ h1.tag{font:400 clamp(27px,4.6vw,48px)/1.12 Lora,serif;letter-spacing:.02em;colo
 .ct svg{width:15px;height:15px;fill:#fff}
 .chan{display:inline-block;margin-top:12px;color:var(--gold);font-size:14px}
 .nwl{display:block;width:100%;max-width:420px;text-align:left;margin:4px 0 12px;padding:12px 18px;border-radius:14px;background:var(--gold2,#9a7a3e);color:#fff;font:600 14px Inter,sans-serif;text-decoration:none;cursor:pointer;border:0}
-.nwb{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#efe4cf;color:#7a5c25;font:600 11px Inter,sans-serif;vertical-align:2px}
+.rpb{background:#e8efe4;color:#3f5a2e;text-decoration:none}.nwb{display:inline-block;margin-left:8px;padding:2px 8px;border-radius:999px;background:#efe4cf;color:#7a5c25;font:600 11px Inter,sans-serif;vertical-align:2px}
 .bar{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--band) 96%,transparent);backdrop-filter:blur(6px);border-top:1px solid #2e2a24}
 .barin{max-width:1240px;margin:auto;padding:8px max(4vw,16px);display:flex;gap:10px;align-items:center}
 .tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;flex:1}
@@ -232,7 +232,7 @@ function card(d){
   const det=(d.o.length?`<div class="lb">Варіанти</div><ul class="op">${ops}</ul>${moreO}`:'')+(d.m.length?`<div class="lb">Матеріали</div><p class="mt">${esc(d.m.join(', '))}</p>`:'');
   const f=FAV.has(d.a);
   return `<article class="c" data-a="${esc(d.a)}"><img src="img/${encodeURIComponent(d.a)}.jpg" loading="lazy" decoding="async" alt="${esc(d.n)}" width="132" height="132">
-  <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
+  <div class="art">${esc(d.a)}${isNew(d)?'<span class="nwb">Нова колекція</span>':''}${d.rp?'<a class="nwb rpb" href="/catalog/m/'+esc(d.a)+'/#real">📷 Реальні фото</a>':''}</div><a class="nm" href="/catalog/m/${esc(d.a)}/">${esc(d.n)}</a>${d.d?`<div class="ds">${esc(d.d)}</div>`:''}${d.x?`<p class="tx">${esc(d.x)}</p>`:''}
   <div class="pr">${rows}</div>${noP(d)?'':'<div class="dv"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6h11v10H2zM13 9h4l4 4v3h-8z"/><circle cx="6" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg>Ціна з доставкою в Україну</div>'}${moreP}${noP(d)?'<div class="rq">Ціна за запитом</div>':''}${!noP(d)&&d.p.some(r=>r[1]!==r[2])?'<div class="pn">«від» — ціна залежить від кольору й оздоблення</div>':''}
   ${det}<div class="act"><button class="askb">Запитати про модель</button><button class="fav${f?' on':''}" aria-pressed="${f}" aria-label="${f?'Прибрати з обраного':'Додати в обране'}">${heart}</button></div></article>`;
 }
